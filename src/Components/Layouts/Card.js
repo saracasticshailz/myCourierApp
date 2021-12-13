@@ -40,10 +40,12 @@ flexDirection:'row',//to set flex horizontally
     shadowRadius: 2,
     marginHorizontal: 4,
     marginVertical: 6,
+    margin:5
   },
   cardContent: {
     marginHorizontal: 18,
     marginVertical: 10,
+    margin:5
   },
   iconStyle:{
 width:30,
