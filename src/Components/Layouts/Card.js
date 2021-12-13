@@ -1,18 +1,35 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View,Image ,Text} from 'react-native';
 
 export default function Card(props) {
+//  const imageURI=[ image,setImageURI]=useState(props.dataArray.imageuri);
+  console.log('props : ',props);
   return (
+   
     <View style={styles.card}>
-      <Image source={props.imgurl}></Image>
+      <View style={styles.cardHeader}> 
+      <Image style={styles.iconStyle} source={props.dataArray.imageuri}></Image>
+       <Text style={styles.mainText}>{ props.dataArray.cardTitle }</Text>
+      </View>
+     
       <View style={styles.cardContent}>
-        { props.children }
+        <Text>Starts from ${ props.dataArray.fromCost }</Text>
+     
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  mainText:{
+fontWeight:'bold'
+  },
+  cardHeader:{
+alignItems:'center',
+justifyContent:'space-between',
+flexDirection:'row',//to set flex horizontally
+
+  },
   card: {
     borderRadius: 6,
     elevation: 3,
@@ -26,6 +43,11 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     marginHorizontal: 18,
-    marginVertical: 20,
+    marginVertical: 10,
+  },
+  iconStyle:{
+width:30,
+height:30,
+margin:5
   }
 });

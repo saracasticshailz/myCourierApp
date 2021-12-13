@@ -32,7 +32,7 @@ export default class App extends React.Component {
       //   <LoginScreen/>
       //   </View>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName='Dashboard'>
           <Stack.Screen name='Login' component={LoginScreen}></Stack.Screen>
           <Stack.Screen name='OTP' component={OTP}></Stack.Screen>
           <Stack.Screen name='Dashboard' component={Dashboard}></Stack.Screen>
