@@ -3,8 +3,8 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-nativ
 
 export default class LoginScreen extends React.Component {
   state={
-    email:"",
-    password:""
+    mobileNo:"",
+  
   }
   render(){
     return (
@@ -15,7 +15,7 @@ export default class LoginScreen extends React.Component {
     </View>
 
         <View style={styles.inputView}>
-            <Text style={{ fontSize:25 ,marginTop:6}}>+91</Text>
+            <Text style={{ fontSize:25 ,marginTop:6 ,color:'#000000'}}>+91</Text>
           <TextInput 
           style={styles.inputText}           
             placeholder="xxxxxxxxxx" 
@@ -24,11 +24,11 @@ export default class LoginScreen extends React.Component {
             multiline
             keyboardType='number-pad'
             maxLength={10}
-            onChangeText={text => this.setState({email:text})}/>
+            onChangeText={text => this.setState({mobileNo:text})}/>
         </View>
-        <Text styles={{marginTop:1}}>By processing ,I approve to the Terms and conditions</Text>
+        <Text style={styles.smallHeader}>By processing ,I approve to the Terms and conditions</Text>
        <TouchableOpacity style={styles.bottomView}  onPress={() => this.props.navigation.navigate('OTP',{
-         mobNO:this.state.email
+         mobNO:this.state.mobileNo
        })}>
           <Text style={styles.loginText}>LOGIN</Text>
         </TouchableOpacity>
@@ -43,7 +43,7 @@ export default class LoginScreen extends React.Component {
 
 const styles = StyleSheet.create({
     mainView:{
-flex:1,
+    flex:1,
     },
 
   container: {
@@ -64,6 +64,7 @@ marginTop:25
   },
   smallHeader:{
     fontSize:15,
+    color:'#000000'
  
   },
   mainHeader:{

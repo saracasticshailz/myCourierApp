@@ -5,7 +5,8 @@ import PasswordInputText from 'react-native-hide-show-password-input';
 
 export default class SetPassword extends React.Component {
   state = {
-    password: ""
+    password: "",
+    isPasswordEntered:false
   }
   render() {
     return (
@@ -25,10 +26,10 @@ export default class SetPassword extends React.Component {
             multiline 
             maxLength={10}
             secureTextEntry={true} 
-            onChangeText={text => this.setState({ email: text })} />
+            onChangeText={text => this.setState({ password: text })} />
         </View>
-        <TouchableOpacity style={styles.bottomView} onPress={() => this.props.navigation.navigate('OTP', {
-          mobNO: this.state.email
+        <TouchableOpacity style={styles.bottomView} onPress={() => this.props.navigation.navigate('Dashboard', {
+          mobNO: this.state.password
         })}>
           <Text style={styles.loginText}>Submit</Text>
         </TouchableOpacity>

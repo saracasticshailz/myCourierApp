@@ -5,7 +5,17 @@ export default class OTP extends React.Component {
   
 
   state={
-    mobNO:this.props.route.params.mobNO
+    mobNO:this.props.route.params.mobNO,
+    myOTP:'',
+    isEntered:false
+  }
+
+  handleOTPClick=()=>{
+    this.setState({isEntered:true});
+    if(this.state.isEntered){
+      this.props.navigation.navigate('SetPassword');
+    }
+
   }
   render(){
    // this.setState({mobNO:this.props.route.params.mobNO})
@@ -27,18 +37,15 @@ export default class OTP extends React.Component {
             multiline
             keyboardType='number-pad'
             maxLength={10}
-            onChangeText={text => this.setState({email:text})}/>
+            onChangeText={text => this.setState({myOTP:text})}/>
         </View>
        <TouchableOpacity style={styles.bottomView} onPress={ 
-         alert('myalert')
-
-        //  if(as==1){
-        //   this.props.navigation.navigate('SetPassword');
-        //  }
+         
+        this.handleOTPClick
         
          
          }>
-          <Text style={styles.loginText}>LOGIN</Text>
+          <Text  style={styles.loginText}>LOGIN</Text>
         </TouchableOpacity>
 
         
@@ -72,7 +79,7 @@ marginTop:25
   },
   smallHeader:{
     fontSize:15,
- 
+ color:'#000000'
   },
   mainHeader:{
     fontWeight:"bold",
