@@ -22,6 +22,7 @@ import LoginScreen from './src/Components/Login/LoginScreen';
 import OTP from './src/Components/Login/OTP';
 import Dashboard from './src/Components/Dashboard/Dashboard';
 import SetPassword from './src/Components/Login/SetPassword'
+import ViewMap from './src/Components/Map/ViewMap';
 
 const Stack= createNativeStackNavigator();
 
@@ -33,11 +34,12 @@ export default class App extends React.Component {
       //   <LoginScreen/>
       //   </View>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='SetPassword'>
+        <Stack.Navigator initialRouteName='Login'>
           <Stack.Screen name='Login' component={LoginScreen}></Stack.Screen>
           <Stack.Screen name='OTP' component={OTP}></Stack.Screen>
           <Stack.Screen name='Dashboard' component={Dashboard}></Stack.Screen>
           <Stack.Screen name='SetPassword' component={SetPassword}></Stack.Screen>
+          <Stack.Screen name='ViewMap' component={ViewMap}></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
     )

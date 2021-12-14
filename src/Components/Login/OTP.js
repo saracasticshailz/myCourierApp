@@ -1,13 +1,15 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
-
+import SetPassword from './SetPassword';
 export default class OTP extends React.Component {
+  
 
   state={
     mobNO:this.props.route.params.mobNO
   }
   render(){
    // this.setState({mobNO:this.props.route.params.mobNO})
+   
     return (
 <View style={styles.mainView}>
     <View style={styles.headerView}>
@@ -27,7 +29,15 @@ export default class OTP extends React.Component {
             maxLength={10}
             onChangeText={text => this.setState({email:text})}/>
         </View>
-       <TouchableOpacity style={styles.bottomView} onPress={ this.props.navigation.navigate('Dashboard')}>
+       <TouchableOpacity style={styles.bottomView} onPress={ 
+         alert('myalert')
+
+        //  if(as==1){
+        //   this.props.navigation.navigate('SetPassword');
+        //  }
+        
+         
+         }>
           <Text style={styles.loginText}>LOGIN</Text>
         </TouchableOpacity>
 

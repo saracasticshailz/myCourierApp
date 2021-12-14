@@ -18,7 +18,7 @@ export default class LoginScreen extends React.Component {
             <Text style={{ fontSize:25 ,marginTop:6}}>+91</Text>
           <TextInput 
           style={styles.inputText}           
-            placeholder="..." 
+            placeholder="xxxxxxxxxx" 
             placeholderTextColor="#003f5c"
             borderColor='#000000'
             multiline
@@ -26,6 +26,7 @@ export default class LoginScreen extends React.Component {
             maxLength={10}
             onChangeText={text => this.setState({email:text})}/>
         </View>
+        <Text styles={{marginTop:1}}>By processing ,I approve to the Terms and conditions</Text>
        <TouchableOpacity style={styles.bottomView}  onPress={() => this.props.navigation.navigate('OTP',{
          mobNO:this.state.email
        })}>
