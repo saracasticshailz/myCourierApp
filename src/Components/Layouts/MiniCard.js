@@ -3,6 +3,7 @@ import { StyleSheet, View,Image ,Text} from 'react-native';
 
 export default function MiniCard(props) {
 //  const imageURI=[ image,setImageURI]=useState(props.dataArray.imageuri);
+
   console.log('props : ',props);
   return (
    
@@ -18,7 +19,6 @@ export default function MiniCard(props) {
 
 const styles = StyleSheet.create({
   mainText:{
-fontWeight:'bold',
 color:'#000000'
   },
   cardHeader:{
@@ -35,9 +35,10 @@ flexDirection:'row',//to set flex horizontally
     shadowColor: '#333',
     shadowOpacity: 0.3,
     shadowRadius: 2,
-    marginHorizontal: 4,
+    marginHorizontal: 4,  
     marginVertical: 6,
-    margin:2
+    margin:5,
+    padding:10
   },
   cardContent: {
     marginHorizontal: 18,
