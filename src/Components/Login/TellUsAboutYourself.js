@@ -1,12 +1,15 @@
 
 
+import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
 import { View, Text, FlatList, ScrollView, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import MiniCard from '../Layouts/MiniCard';
 
 
 
-export default function TellUsAboutYourself() {
+export default function TellUsAboutYourself({navigation}) {
+
+  //const navigation=useNavigation();
   const whatDeliverydataArray = [{
     cardTitle: 'Ready-to-eat-food',
     _id: 'C001'
@@ -67,14 +70,19 @@ const howDeliverydataArray = [{
 
     <View style={{
       //alignItems: 'center', 
-      marginLeft: 10,
-      justifyContent: 'center'
+      margin: 10,
+      flex:1
+    
+    //  justifyContent: 'center',
+     
+      
     }}>
       {/* <Text>Dashboard Screen</Text> */}
 
 
       <ScrollView
-        scrollEnabled={true}>
+        scrollEnabled={true}
+      >
         <Text style={Styles.mainHeader}>Tell us about yourself</Text>
         <Text style={Styles.smallHeader}>So that we can make your deliveries smoother</Text>
 
@@ -151,12 +159,17 @@ const howDeliverydataArray = [{
         />
 
         <Text>We will assign the nearest courier to pick-up and deliver as soon as possible</Text> */}
+
+
+
       </ScrollView>
 
+     
 
-
-
-
+      <TouchableOpacity style={Styles.bottomView} 
+        onPress={() => navigation.navigate('WhatsYourName')}>
+          <Text style={Styles.loginText}>SUBMIT</Text>
+        </TouchableOpacity>
 
 
 
@@ -165,6 +178,9 @@ const howDeliverydataArray = [{
 }
 
 const Styles = StyleSheet.create({
+  loginText: {
+    color: "white"
+  },
   list: {
     justifyContent: 'center',
     flexDirection: 'row',
@@ -216,6 +232,15 @@ const Styles = StyleSheet.create({
     marginLeft: 100,
     marginRight: 100,
     alignItems: 'center',
+  },
+  bottomView: {
+    width: '100%',
+    height: 50,
+    backgroundColor: '#EE5407',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute', 
+    bottom: 0, 
   }
 
 

@@ -1,14 +1,22 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import SetPassword from './SetPassword';
+import OtpInputs from '../Layouts/OtpInputs';
+//import { Card } from 'react-native-paper';
+import OTPTextView from 'react-native-otp-textinput';
 export default class OTP extends React.Component {
   
 
   state={
     mobNO:this.props.route.params.mobNO,
-    myOTP:'',
+    otp:'',
     isEntered:false
-  }
+  };
+
+  getOtp(otp) {
+       console.log(otp);
+       this.setState({ otp });
+ }
 
   handleOTPClick=()=>{
     this.setState({isEntered:true});
@@ -27,7 +35,14 @@ export default class OTP extends React.Component {
  <Text style={styles.smallHeader}>We sent code to {this.state.mobNO} </Text>
     </View>
 
-        <View style={styles.inputView}>
+    <OTPTextView
+          handleTextChange={(e) => {}}
+          containerStyle={styles.textInputContainer}
+          textInputStyle={styles.roundedTextInput}
+          defaultValue="1234"
+        />
+
+        {/* <View style={styles.inputView}>
         
           <TextInput 
           style={styles.inputText}           
@@ -38,7 +53,9 @@ export default class OTP extends React.Component {
             keyboardType='number-pad'
             maxLength={10}
             onChangeText={text => this.setState({myOTP:text})}/>
-        </View>
+        </View> */}
+
+
        <TouchableOpacity style={styles.bottomView} onPress={ 
          
         this.handleOTPClick
@@ -48,8 +65,8 @@ export default class OTP extends React.Component {
           <Text  style={styles.loginText}>LOGIN</Text>
         </TouchableOpacity>
 
-        
-      </View>
+      
+      </View> 
      
       
     );
@@ -57,8 +74,29 @@ export default class OTP extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  textInputContainer: {
+    marginBottom: 20,
+  //  width:70,
+   // justifyContent: 'flex-start',
+  //  flexDirection:'row',
+  margin:50
+   
+    
+  },  
+  roundedTextInput: {
+    borderRadius: 10,
+    borderWidth: 4,
+  },
+  container1: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingTop:20,
+    backgroundColor: '#ecf0f1',
+    padding: 8,
+  },
     mainView:{
 flex:1,
+flexDirection:'column',
     },
 
   container: {

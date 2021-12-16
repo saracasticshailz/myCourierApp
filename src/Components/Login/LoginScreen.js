@@ -64,7 +64,10 @@ marginTop:25
   },
   smallHeader:{
     fontSize:15,
-    color:'#000000'
+    color:'#000000',
+    marginLeft:15,
+    marginTop:10
+   // marginLeft:'10'
  
   },
   mainHeader:{
@@ -76,7 +79,7 @@ marginTop:25
   },
   inputView:{
    flexDirection:'row',
-    marginTop:25,
+    marginTop:20,
     padding:10,
     fontSize:25,
     borderColor:'#d3d3d3',

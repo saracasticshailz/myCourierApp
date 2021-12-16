@@ -18,7 +18,7 @@ export default class WhatsYourName extends React.Component {
             {/* <Text style={{ fontSize:25 ,marginTop:6 ,color:'#000000'}}>+91</Text> */}
           <TextInput 
           style={styles.inputText}           
-            placeholder="xxxxxxxxxx" 
+           // placeholder="xxxxxxxxxx" 
             placeholderTextColor="#003f5c"
             borderColor='#000000'
             multiline
@@ -26,11 +26,11 @@ export default class WhatsYourName extends React.Component {
             maxLength={10}
             onChangeText={text => this.setState({mobileNo:text})}/>
         </View>
-        <Text style={styles.smallHeader}>By processing ,I approve to the Terms and conditions</Text>
-       <TouchableOpacity style={styles.bottomView}  onPress={() => this.props.navigation.navigate('OTP',{
-         mobNO:this.state.mobileNo
+        <Text style={styles.smallHeader}>By processing ,I approve to the Terms &#38; conditions</Text>
+       <TouchableOpacity style={styles.bottomView}  onPress={() => this.props.navigation.navigate('Dashboard',{
+         mobNO:this.state.mobileNo 
        })}>
-          <Text style={styles.loginText}>LOGIN</Text>
+          <Text style={styles.loginText}>SUBMIT</Text>
         </TouchableOpacity>
 
         
@@ -64,9 +64,12 @@ marginTop:25
   },
   smallHeader:{
     fontSize:15,
-    color:'#000000'
+    color:'#000000',
+    marginLeft:15,
+    marginTop:15
  
   },
+  underline: {textDecorationLine: 'underline',color:'#000000'},
   mainHeader:{
     fontWeight:"bold",
     fontSize:30,

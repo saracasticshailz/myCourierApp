@@ -3,7 +3,18 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-nativ
 import PasswordInputText from 'react-native-hide-show-password-input';
 
 
+
 export default class SetPassword extends React.Component {
+  static navigationOptions = {
+    title: 'Home',
+    headerStyle: {
+      backgroundColor: '#f4511e',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+  };
   state = {
     password: "",
     isPasswordEntered:false
@@ -19,19 +30,23 @@ export default class SetPassword extends React.Component {
         <View style={styles.inputView}>
          
           <TextInput
+             secureTextEntry={true}
             style={styles.inputText}
-            placeholder="..."
+            // placeholder="........."
+         
             placeholderTextColor="#003f5c"
             borderColor='#000000'
             multiline 
             maxLength={10}
-            secureTextEntry={true} 
+             
+            textContentType={'password'}
             onChangeText={text => this.setState({ password: text })} />
         </View>
-        <TouchableOpacity style={styles.bottomView} onPress={() => this.props.navigation.navigate('Dashboard', {
+        <TouchableOpacity style={styles.bottomView} 
+        onPress={() => this.props.navigation.navigate('TellUsAboutYourself', {
           mobNO: this.state.password
         })}>
-          <Text style={styles.loginText}>Submit</Text>
+          <Text style={styles.loginText}>SUBMIT</Text>
         </TouchableOpacity>
 
 
