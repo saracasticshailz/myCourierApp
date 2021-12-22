@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity,Animated } from 'react-native';
 import PasswordInputText from 'react-native-hide-show-password-input';
 
 
@@ -20,6 +20,7 @@ export default class SetPassword extends React.Component {
     isPasswordEntered:false
   }
   render() {
+    const { password } = this.state;
     return (
       <View style={styles.mainView}>
         <View style={styles.headerView}>
@@ -27,9 +28,9 @@ export default class SetPassword extends React.Component {
           <Text style={styles.smallHeader}>The password must be at least 8 characters in length.Password must be contain at least one letter.</Text>
         </View>
 
-        <View style={styles.inputView}>
+        <View style={{margin:10 }}>
          
-          <TextInput
+          {/* <TextInput
              secureTextEntry={true}
             style={styles.inputText}
             // placeholder="........."
@@ -40,7 +41,23 @@ export default class SetPassword extends React.Component {
             maxLength={10}
              
             textContentType={'password'}
-            onChangeText={text => this.setState({ password: text })} />
+            onChangeText={text => this.setState({ password: text })} /> */}
+
+{/* <Animated.TextInput
+  scrollEventThrottle={1}
+  onScroll={Animated.event(
+    [{ nativeEvent: { contentOffset: { y: this.state.animatedValue } } }],
+    { useNativeDriver: true } // Add this line
+  )}
+>
+
+</Animated.TextInput> */}
+<PasswordInputText
+          getRef={input => this.input = input}
+          value={password}
+          onChangeText={(password) => this.setState({ password })}
+        />
+            
         </View>
         <TouchableOpacity style={styles.bottomView} 
         onPress={() => this.props.navigation.navigate('TellUsAboutYourself', {
@@ -81,7 +98,7 @@ const styles = StyleSheet.create({
   },
   smallHeader: {
     fontSize: 15,
-
+    color: "#000000",
   },
   mainHeader: {
     fontWeight: "bold",
