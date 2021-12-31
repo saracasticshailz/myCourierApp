@@ -136,6 +136,11 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+            multiDexEnabled true
+
+    }
+      dexOptions {
+        jumboMode true // *
     }
     splits {
         abi {
@@ -197,11 +202,14 @@ android {
 }
 
 dependencies {
+
+//implementation project(':mapmyindia-restapi-react-native-beta')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation 'com.android.support:multidex:2.0.1'
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'

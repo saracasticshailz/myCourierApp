@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
 import { View, Text, FlatList, ScrollView, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import MiniCard from '../Layouts/MiniCard';
-
+import styles from '../Style/StyleGlobal';
 
 
 export default function TellUsAboutYourself({navigation}) {
@@ -83,10 +83,10 @@ const howDeliverydataArray = [{
       <ScrollView
         scrollEnabled={true}
       >
-        <Text style={Styles.mainHeader}>Tell us about yourself</Text>
-        <Text style={Styles.smallHeader}>So that we can make your deliveries smoother</Text>
+        <Text style={styles.mainHeader}>Tell us about yourself</Text>
+        <Text style={styles.smallHeader}>So that we can make your deliveries smoother</Text>
 
-        <Text style={Styles.textStyle} >Do you need delivery for business?</Text>
+        <Text style={styles.boldTextStyle} >Do you need delivery for business?</Text>
 
         <View style={{ flexDirection: 'row', }}>
 
@@ -98,11 +98,11 @@ const howDeliverydataArray = [{
         
         
         
-        <Text style={Styles.textStyle} >What do you deliver?</Text>
+        <Text style={styles.boldTextStyle} >What do you deliver?</Text>
 
         <View style={{ flexDirection: 'column', }}>
         <FlatList
-           contentContainerStyle={Styles.list}
+           contentContainerStyle={styles.list}
           horizontal
           data={whatDeliverydataArray}
           numColumns={1}
@@ -120,11 +120,11 @@ const howDeliverydataArray = [{
         </View>
 
 
-        <Text style={Styles.textStyle} >How many deliveries per week?</Text>
+        <Text style={styles.boldTextStyle} >How many deliveries per week?</Text>
 
 <View style={{ flexDirection: 'column', }}>
 <FlatList
-   contentContainerStyle={Styles.list}
+   contentContainerStyle={styles.list}
   horizontal
   data={howDeliverydataArray}
   numColumns={1}
@@ -166,9 +166,9 @@ const howDeliverydataArray = [{
 
      
 
-      <TouchableOpacity style={Styles.bottomView} 
+      <TouchableOpacity style={styles.bottomView} 
         onPress={() => navigation.navigate('WhatsYourName')}>
-          <Text style={Styles.loginText}>SUBMIT</Text>
+          <Text style={styles.loginText}>SUBMIT</Text>
         </TouchableOpacity>
 
 
@@ -177,71 +177,71 @@ const howDeliverydataArray = [{
   );
 }
 
-const Styles = StyleSheet.create({
-  loginText: {
-    color: "white"
-  },
-  list: {
-    justifyContent: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    },
-  smallHeader: {
-    fontSize: 15,
-    color: '#000000'
+// const Styles = StyleSheet.create({
+//   loginText: {
+//     color: "white"
+//   },
+//   list: {
+//     justifyContent: 'center',
+//     flexDirection: 'row',
+//     flexWrap: 'wrap',
+//     },
+//   smallHeader: {
+//     fontSize: 15,
+//     color: '#000000'
 
-  },
-  mainHeader: {
-    fontWeight: "bold",
-    fontSize: 30,
-    color: "#000000",
-    marginTop: 20,
+//   },
+//   mainHeader: {
+//     fontWeight: "bold",
+//     fontSize: 30,
+//     color: "#000000",
+//     marginTop: 20,
 
-  },
+//   },
 
-  buttonStyle: {
-    width: '50%',
-    marginTop: 12,
-    backgroundColor: "#d3d3d3",
-    padding: 15,
-    borderRadius: 50,
-    // marginRight:5,
-    // marginLeft:15
-    justifyContent: "space-between",
-    textAlign: 'center',
-    alignContent: 'space-between',
-    alignItems: 'center'
-  },
-  btnText: {
-    color: "#000000",
-    fontSize: 16,
-    justifyContent: "space-between",
-    textAlign: "center",
-  },
-  textStyle: {
-    fontSize: 16,
-    color: '#000000',
-    fontWeight: 'bold',
-    marginTop: 15
-  },
-  btn: {
-    alignSelf: 'stretch',
-    backgroundColor: '#01c853',
-    padding: 10,
-    margin: 10,
-    marginLeft: 100,
-    marginRight: 100,
-    alignItems: 'center',
-  },
-  bottomView: {
-    width: '100%',
-    height: 50,
-    backgroundColor: '#EE5407',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute', 
-    bottom: 0, 
-  }
+//   buttonStyle: {
+//     width: '50%',
+//     marginTop: 12,
+//     backgroundColor: "#d3d3d3",
+//     padding: 15,
+//     borderRadius: 50,
+//     // marginRight:5,
+//     // marginLeft:15
+//     justifyContent: "space-between",
+//     textAlign: 'center',
+//     alignContent: 'space-between',
+//     alignItems: 'center'
+//   },
+//   btnText: {
+//     color: "#000000",
+//     fontSize: 16,
+//     justifyContent: "space-between",
+//     textAlign: "center",
+//   },
+//   boldTextStyle: {
+//     fontSize: 16,
+//     color: '#000000',
+//     fontWeight: 'bold',
+//     marginTop: 15
+//   },
+//   btn: {
+//     alignSelf: 'stretch',
+//     backgroundColor: '#01c853',
+//     padding: 10,
+//     margin: 10,
+//     marginLeft: 100,
+//     marginRight: 100,
+//     alignItems: 'center',
+//   },
+//   bottomView: {
+//     width: '100%',
+//     height: 50,
+//     backgroundColor: '#EE5407',
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     position: 'absolute', 
+//     bottom: 0, 
+//   }
 
 
-});
+// });
