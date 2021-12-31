@@ -25,6 +25,7 @@ import SetPassword from './src/Components/Login/SetPassword'
 import ViewMap from './src/Components/Map/ViewMap';
 import TellUsAboutYourself from './src/Components/Login/TellUsAboutYourself'
 import WhatsYourName from './src/Components/Login/WhatsYourName'
+import Test from './src/Components/Login/Test';
 
 const Stack= createNativeStackNavigator();
 
@@ -42,6 +43,7 @@ export default class App extends React.Component {
           <Stack.Screen name='ViewMap' component={ViewMap} options={{title:'View Map'}}></Stack.Screen>
           <Stack.Screen name='TellUsAboutYourself' component={TellUsAboutYourself} options={{title:'Tell Us About Yourself'}}></Stack.Screen>
           <Stack.Screen name='WhatsYourName' component={WhatsYourName}options={{title:'Whats Your Name'}}></Stack.Screen>
+          <Stack.Screen name='Test' component={Test}options={{title:'Whats Your Name'}}></Stack.Screen>
 
         </Stack.Navigator>
       </NavigationContainer>

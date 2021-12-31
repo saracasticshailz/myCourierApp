@@ -160,7 +160,7 @@ android {
          release {
       storeFile file('myCourierApp.keystore')
       storePassword 'Password@123'
-      keyAlias 'myCourierApp'
+      keyAlias 'your_key_alias'
       keyPassword 'Password@123'
     }
     }
