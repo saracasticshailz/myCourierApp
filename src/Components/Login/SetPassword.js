@@ -29,29 +29,7 @@ export default class SetPassword extends React.Component {
         </View>
 
         <View style={{margin:10 }}>
-         
-          {/* <TextInput
-             secureTextEntry={true}
-            style={styles.inputText}
-            // placeholder="........."
-         
-            placeholderTextColor="#003f5c"
-            borderColor='#000000'
-            multiline 
-            maxLength={10}
-             
-            textContentType={'password'}
-            onChangeText={text => this.setState({ password: text })} /> */}
 
-{/* <Animated.TextInput
-  scrollEventThrottle={1}
-  onScroll={Animated.event(
-    [{ nativeEvent: { contentOffset: { y: this.state.animatedValue } } }],
-    { useNativeDriver: true } // Add this line
-  )}
->
-
-</Animated.TextInput> */}
 <PasswordInputText
           getRef={input => this.input = input}
           value={password}

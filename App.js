@@ -26,7 +26,8 @@ import ViewMap from './src/Components/Map/ViewMap';
 import TellUsAboutYourself from './src/Components/Login/TellUsAboutYourself'
 import WhatsYourName from './src/Components/Login/WhatsYourName'
 import Test from './src/Components/Login/Test';
-
+import Razorpayment from './src/Components/Payment/Razorpayment';
+import AddressSelection from './src/Components/Map/AddressSelection';
 const Stack= createNativeStackNavigator();
 
 export default class App extends React.Component {
@@ -35,7 +36,7 @@ export default class App extends React.Component {
     return(
       
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='ViewMap'>
+        <Stack.Navigator initialRouteName='AddressSelection'>
           <Stack.Screen name='Login' component={LoginScreen} options={{title:'Login'}}></Stack.Screen>
           <Stack.Screen name='OTP' component={OTP} options={{title:'OTP'}}></Stack.Screen>
           <Stack.Screen name='Dashboard' component={Dashboard} options={{title:'Dashboard'}}></Stack.Screen>
@@ -44,6 +45,8 @@ export default class App extends React.Component {
           <Stack.Screen name='TellUsAboutYourself' component={TellUsAboutYourself} options={{title:'Tell Us About Yourself'}}></Stack.Screen>
           <Stack.Screen name='WhatsYourName' component={WhatsYourName}options={{title:'Whats Your Name'}}></Stack.Screen>
           <Stack.Screen name='Test' component={Test}options={{title:'Whats Your Name'}}></Stack.Screen>
+          <Stack.Screen name='Razorpayment' component={Razorpayment}options={{title:'Razorpayment'}}></Stack.Screen>
+          <Stack.Screen name='AddressSelection' component={AddressSelection}options={{title:'AddressSelection'}}></Stack.Screen>
 
         </Stack.Navigator>
       </NavigationContainer>

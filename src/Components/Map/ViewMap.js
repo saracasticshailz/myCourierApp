@@ -5,10 +5,10 @@ import { check, request, PERMISSIONS, RESULTS } from "react-native-permissions"
 import  MapmyIndiaGL  from  'mapmyindia-map-react-native-beta';
 
 MapmyIndiaGL.setMapSDKKey("db7d087ab67a71109cbc057e694a8319");//place your mapsdkKey
-MapmyIndiaGL.setRestAPIKey("");//your restApiKey
+MapmyIndiaGL.setRestAPIKey("db7d087ab67a71109cbc057e694a8319");//your restApiKey
 MapmyIndiaGL.setAtlasClientId("33OkryzDZsLkd_neC1Aj859UKpsG3A1qjGwTvNO-a4nvwJvUKyfduw-8J55guJkndZuc8Z3-pPsHuWi1aWEwzA==");//your atlasClientId key
 MapmyIndiaGL.setAtlasClientSecret("lrFxI-iSEg9VgCF51T7HzlVBBXZ0a_MbxhAbZkVDBLLEOClYsQsYohaM7junOHoJXMOCWHtPcPDwkOe8dR4YG-JXljPoItOs"); //your atlasClientSecret key
-MapmyIndiaGL.setAtlasGrantType("");
+MapmyIndiaGL.setAtlasGrantType("client_credentials");
 
 export default class ViewMap extends Component {
   render() {
