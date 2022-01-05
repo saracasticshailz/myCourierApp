@@ -9,10 +9,32 @@ const styles = StyleSheet.create({
   map: {
     ...StyleSheet.absoluteFillObject,
   },
+  btnText: {
+        color: "#000000",
+        fontSize: 16,
+        justifyContent: "space-between",
+        textAlign: "center",
+      },
     mainView:{
     flex:1,
     },
-
+    buttonStyle: {
+      width: '50%',
+      marginTop: 12,
+      backgroundColor: "#d3d3d3",
+      padding: 15,
+      borderRadius: 50,
+      // marginRight:5,
+      // marginLeft:15
+      justifyContent: "space-between",
+      textAlign: 'center',
+      alignContent: 'space-between',
+      alignItems: 'center'
+    },
+    normalText:{
+      color:'#000000',
+      margin:5
+    },
   container: {
     flexDirection: 'column', 
     flexGrow: 1,
@@ -108,6 +130,11 @@ marginTop:25
     fontWeight: 'bold',
     marginTop: 15
   },
+  underlineTextContainer: {
+    borderBottomWidth: 2,
+    borderColor: '#000000',
+    marginLeft: 25,
+}
 
 });
 export default styles;

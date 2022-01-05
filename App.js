@@ -28,6 +28,7 @@ import WhatsYourName from './src/Components/Login/WhatsYourName'
 import Test from './src/Components/Login/Test';
 import Razorpayment from './src/Components/Payment/Razorpayment';
 import AddressSelection from './src/Components/Map/AddressSelection';
+import DistanceApiMap from './src/Components/Map/DistanceApiMap'
 const Stack= createNativeStackNavigator();
 
 export default class App extends React.Component {
@@ -47,7 +48,7 @@ export default class App extends React.Component {
           <Stack.Screen name='Test' component={Test}options={{title:'Whats Your Name'}}></Stack.Screen>
           <Stack.Screen name='Razorpayment' component={Razorpayment}options={{title:'Razorpayment'}}></Stack.Screen>
           <Stack.Screen name='AddressSelection' component={AddressSelection}options={{title:'AddressSelection'}}></Stack.Screen>
-
+          <Stack.Screen name='DistanceApiMap' component={DistanceApiMap}options={{title:'Distance Map'}}></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
     )

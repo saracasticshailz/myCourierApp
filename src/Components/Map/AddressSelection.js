@@ -23,47 +23,86 @@ class AddressSelection extends Component {
       lat: 0,
       lng: 0,
       label: '',
+      eLoc:''
     };
   }
 
   async componentDidMount() {
-    this.geoCodeApi('lucknow');
+    this.geoCodeApi('Bhawani nagar bhandup mumbai');
   }
 
   geoCodeApi(placeName) {
-    Mapmyindia.atlas_geocode({address: placeName}, response => {
-      const longitude = response.copResults.longitude;
-      const latitude = response.copResults.latitude;
-      const eLoc = response.copResults.eLoc;
-      this.setState({
-        // lat: parseFloat(latitude),
-        // lng: parseFloat(longitude),
-        lat: '18.978050',
-        lng: '73.106087',
-      });
-      console.log(response);
+    // Mapmyindia.atlas_geocode({address: placeName}, response => {
+    //   const longitude = response.copResults.longitude;
+    //   const latitude = response.copResults.latitude;
+    //   const eLoc = response.copResults.eLoc;
+    //   this.setState({
+    //     // lat: parseFloat(latitude),
+    //     // lng: parseFloat(longitude),
+    //     // lat: '18.978050',
+    //     // lng: '73.106087',
+    //     eLoc:eLoc
+    //   });
+    //   console.log(response);
 
-      Toast.show(
-        `Longitude :${longitude} Latitude :${latitude} Eloc :${eLoc}`,
-        Toast.LONG,
-      );
-      this.setState({
-        label: response.copResults.formattedAddress,
+    //   Toast.show(
+    //     `Longitude :${longitude} Latitude :${latitude} Eloc :${eLoc}`,
+    //     Toast.LONG,
+    //   );
+    //   this.setState({
+    //     label: response.copResults.formattedAddress,
+    //   });
+    // });
+
+    // ===========================
+    MapmyIndiaGL.RestApi.geocode({address:placeName})
+    .then(response => {
+    const data = JSON.parse(response);
+    console.log("geocode : "+response);
+          const eloc = data.results[0].eLoc;
+                this.setState({
+        eLoc:eloc
       });
-    });
-  }
+
+    this._getDistanceViaeLoc();
+    })
+    .catch(error => console.log(error.code,error.message));
+
+
+  } ;
+
+_getDistanceViaeLoc(){
+  console.log(this.state.eLoc);
+
+    MapmyIndiaGL.RestApi.distance({coordinates:['mmi000',this.state.eLoc]}) 
+    .then(response => { 
+      const data = JSON.parse(response); 
+      //       this.setState({
+      //   // lat: parseFloat(latitude),
+      //   // lng: parseFloat(longitude),
+      //   // lat: '18.978050',
+      //   // lng: '73.106087',
+      // });
+      console.log("_getDistanceViaeLoc : "+response);
+    
+      // this.camera.moveWithEloc(this.state.eLoc, 200)
+     this.camera.flyWithEloc(this.state.eLoc,2000)
+    }) 
+    .catch(error => console.log(error.code,error.message));
+  };
 
   onClick() {
     if (this.state.query.trim().length > 0) {
-      this.setState({
-        markerLat: this.state.lat,
-        markerLng: this.state.lng,
-      });
+      // this.setState({
+      //   markerLat: this.state.lat,
+      //   markerLng: this.state.lng,
+        
+      // });
       this.geoCodeApi(this.state.query);
       Keyboard.dismiss();
       // this.moveCamera(this.state.lng,this.state.lat);
     } else {
-      Toast.show('please enter some value');
+      Toast.show('please enter Address');
     }
   }
 
@@ -80,23 +119,28 @@ class AddressSelection extends Component {
             paddingRight: 1,
           }}>
           <TextInput
-            placeholder="Enter address to get geocode details "
+            placeholder="Enter address details"
             style={{borderWidth: 1, borderRadius: 4,height:40,padding:10,margin:5,minWidth:200}}
             onChangeText={text => this.setState({query: text})}
           />
-          <Button title="call geocode" onPress={() => this.onClick()} />
+          <Button title="Get Map" onPress={() => this.onClick()} />
         </View>
-        <MapmyIndiaGL.MapView style={{flex: 1}}>
+        <MapmyIndiaGL.MapView style={{flex: 1}}>  
           <MapmyIndiaGL.Camera
             zoomLevel={12}
             ref={c => (this.camera = c)}
-            centerCoordinate={[this.state.lng, this.state.lat]}
+            centerELoc={this.state.eLoc}
           />
 
           <MapmyIndiaGL.PointAnnotation
             id="markerId"
             title="Marker"
-            coordinate={[this.state.lng, this.state.lat]}>
+            show
+            zoomLevel={12}
+           eLoc={this.state.eLoc}
+          // style={{}}
+           centerELoc={this.state.eLoc}
+            >
             <MapmyIndiaGL.Callout title={this.state.label} />
           </MapmyIndiaGL.PointAnnotation>
         </MapmyIndiaGL.MapView>

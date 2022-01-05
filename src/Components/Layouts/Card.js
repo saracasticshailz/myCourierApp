@@ -13,7 +13,7 @@ export default function Card(props) {
       </View>
      
       <View style={styles.cardContent}>
-        <Text>Starts from ${ props.dataArray.fromCost }</Text>
+        <Text style={{color:'#000000'}}>Starts from ${ props.dataArray.fromCost }</Text>
      
       </View>
     </View>
@@ -22,7 +22,8 @@ export default function Card(props) {
 
 const styles = StyleSheet.create({
   mainText:{
-fontWeight:'bold'
+fontWeight:'bold',
+color:'#000000'
   },
   cardHeader:{
 alignItems:'center',
