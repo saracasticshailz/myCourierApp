@@ -5,16 +5,7 @@ import styles from '../Style/StyleGlobal'
 
 
 export default class SetPassword extends React.Component {
-  static navigationOptions = {
-    title: 'Home',
-    headerStyle: {
-      backgroundColor: '#f4511e',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
-  };
+
   state = {
     password: "",
     isPasswordEntered:false

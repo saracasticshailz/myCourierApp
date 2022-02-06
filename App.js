@@ -17,6 +17,7 @@ import {
   View,
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { navigationRef } from './RootNavigation';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './src/Components/Login/LoginScreen';
 import OTP from './src/Components/Login/OTP';
@@ -29,6 +30,7 @@ import Test from './src/Components/Login/Test';
 import Razorpayment from './src/Components/Payment/Razorpayment';
 import AddressSelection from './src/Components/Map/AddressSelection';
 import DistanceApiMap from './src/Components/Map/DistanceApiMap'
+import SelectCity from './src/Components/Login/SelectCity';
 const Stack= createNativeStackNavigator();
 
 export default class App extends React.Component {
@@ -36,9 +38,9 @@ export default class App extends React.Component {
   render (){
     return(
       
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName='AddressSelection'>
-          <Stack.Screen name='Login' component={LoginScreen} options={{title:'Login'}}></Stack.Screen>
+      <NavigationContainer  ref={navigationRef}>
+        <Stack.Navigator initialRouteName='SelectCity'>
+          <Stack.Screen name='LoginScreen' component={LoginScreen} options={{title:'Login'}}></Stack.Screen>
           <Stack.Screen name='OTP' component={OTP} options={{title:'OTP'}}></Stack.Screen>
           <Stack.Screen name='Dashboard' component={Dashboard} options={{title:'Dashboard'}}></Stack.Screen>
           <Stack.Screen name='SetPassword' component={SetPassword} options={{title:'Set Password'}}></Stack.Screen>
@@ -49,6 +51,7 @@ export default class App extends React.Component {
           <Stack.Screen name='Razorpayment' component={Razorpayment}options={{title:'Razorpayment'}}></Stack.Screen>
           <Stack.Screen name='AddressSelection' component={AddressSelection}options={{title:'AddressSelection'}}></Stack.Screen>
           <Stack.Screen name='DistanceApiMap' component={DistanceApiMap}options={{title:'Distance Map'}}></Stack.Screen>
+          <Stack.Screen name='SelectCity' component={SelectCity}options={{title:'Select City'}}></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
     )

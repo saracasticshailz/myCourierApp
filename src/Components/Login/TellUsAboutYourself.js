@@ -62,9 +62,6 @@ const howDeliverydataArray = [{
 }
 ];
 
-  //const [myArray, setdataArray] = React.useState(dataArray);
-
-  //setdataArray([...myArray,dataArray]);
 
   return (
 

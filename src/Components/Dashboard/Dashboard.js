@@ -36,6 +36,10 @@ export default function Dashboard({navigation}) {
     }
     
   };
+
+  function _handleRazorPayClick(){
+    navigation.navigate('Razorpayment',{});
+  }
   return (
 
     
@@ -74,9 +78,12 @@ export default function Dashboard({navigation}) {
         </View>
 
         <View style={styles.buttonStyle}>
-          <TouchableOpacity hitSlop={{ top: 10, bottom: 10, left: 50, right: 50 }}>
+          <TouchableOpacity hitSlop={{ top: 10, bottom: 10, left: 50, right: 50 }}
+           onPress={() =>  
+            _handleRazorPayClick()
+            }>
             <Text style={styles.btnText}>
-              Up to 1kg &#10140;
+              Razorpayment &#10140;
             </Text>
           </TouchableOpacity>
         </View>
@@ -87,13 +94,24 @@ export default function Dashboard({navigation}) {
 
 
     <View style={styles.underlineTextContainer}>
-        <Text style={styles.mainHeader}>Pickup Point</Text>
+        <Text style={styles.mainHeader}> Pickup Point</Text>
 
         <TouchableOpacity style={styles.btn} 
         onPress={() =>  
           _handleMapClick()
           }
-        ><Text style={{margin:15,color:'#000000'}}>Pickup point</Text></TouchableOpacity>
+        ><Text style={{margin:15,color:'#000000'}}>From</Text></TouchableOpacity>
+
+      </View>
+
+      <View style={styles.underlineTextContainer}>
+       
+
+        <TouchableOpacity style={styles.btn} 
+        onPress={() =>  
+          _handleMapClick()
+          }
+        ><Text style={{margin:15,color:'#000000'}}>To</Text></TouchableOpacity>
 
       </View>
 </View>

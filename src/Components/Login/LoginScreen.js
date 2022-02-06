@@ -1,13 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import styles from '../Style/StyleGlobal';
+import Constant from '../../utils/Constant';
+import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
+import RootNavigation from './../../../RootNavigation'
 
-export default class LoginScreen extends React.Component {
-  state={
-    mobileNo:"",
+
+export default function LoginScreen (props) {
+
+    console.log(props)
+    const [city,setCity]=useState(props.route.params.city);
+    const [mobNo,setMobNo]=useState();
+   
+
+   function nagivateNext(){
+   if(mobNo){
+   
+    axios.post('https://stgapi.opoli.in/user/login', {'mobilenumber':'7666688829'},{})
+      .then(function(response) {
+      
+      console.log(response);
+      if(response.status === 200){
+      //  const LOGIN_TOKEN=response.data.token;
+      console.log("200"+ response.status);
+      props.navigation.navigate('OTP',{
+        city:city,
+        mobNo:mobNo
+      });
+    //  RootNavigation.navigate('OTP',{
+    //    city:city,
+    //    mobNo:mobNo
+    //  });
+    //navigation.navigate('OTP',this.state)
+      }else{
+        console.log('error',response);
+      }
+      
+      })
+      
+      .catch(function(error) {
+      
+      console.log(error);
+      
+      }); 
+
+
+         
+          };
+ 
+     
+     
+    }
   
-  }
-  render(){
     return (
 <View style={styles.mainView}>
     <View style={styles.headerView}>
@@ -22,15 +67,17 @@ export default class LoginScreen extends React.Component {
             placeholder="xxxxxxxxxx" 
             placeholderTextColor="#003f5c"
             borderColor='#000000'
-            multiline
             keyboardType='number-pad'
             maxLength={10}
-            onChangeText={text => this.setState({mobileNo:text})}/>
+            returnKeyLabel='Done' 
+            returnKeyType='done' 
+          //  onSubmitEditing={() => this.nagivateNext()}
+            onChangeText={text => setMobNo(text)}/>
         </View>
         <Text style={styles.smallHeader}>By processing ,I approve to the Terms and conditions</Text>
-       <TouchableOpacity style={styles.bottomView}  onPress={() => this.props.navigation.navigate('OTP',{
-         mobNO:this.state.mobileNo
-       })}>
+       <TouchableOpacity style={styles.bottomView}  
+       onPress={() => 
+       nagivateNext()}>
           <Text style={styles.loginText}>LOGIN</Text>
         </TouchableOpacity>
 
@@ -39,7 +86,7 @@ export default class LoginScreen extends React.Component {
      
       
     );
-  }
+  
 }
 
 // const styles = StyleSheet.create({

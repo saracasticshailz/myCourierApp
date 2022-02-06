@@ -6,7 +6,7 @@ import RazorpayCheckout from 'react-native-razorpay';
 
 export default class Razorpayment extends React.Component {
   
-    _onPressButton() {
+    _onPressRazorButton() {
         var options = {
             description: 'Test Account',
             image: 'https://i.imgur.com/3g7nmJC.png',
@@ -29,6 +29,10 @@ export default class Razorpayment extends React.Component {
             alert(`Error: ${error.code} | ${error.description}`);
           });
           }
+
+          __onPressPaytmButton(){
+
+          }
 //   state={
 //     mobNO:this.props.route.params.mobNO,
 //     otp:'',
@@ -49,11 +53,20 @@ export default class Razorpayment extends React.Component {
 //   }
   render(){
    // this.setState({mobNO:this.props.route.params.mobNO})
-   
+   this._onPressRazorButton();
     return (
-        <View style={styles.mainView}>
-                    <TouchableOpacity style={styles.bottomView} 
-        onPress={() => this._onPressButton()}>
+        <View 
+        style={styles.mainView}
+        >
+            <View>
+            <TouchableOpacity style={styles.bottomView} 
+        onPress={() => this._onPressPaytmButton()}>
+          <Text style={styles.loginText}>PAYTM</Text>
+        </TouchableOpacity>
+        </View>        
+
+        <TouchableOpacity style={styles.bottomView} 
+        onPress={() => this._onPressRazorButton()}>
           <Text style={styles.loginText}>SUBMIT</Text>
         </TouchableOpacity>
  {/* <TouchableHighlight onPress={() => {
