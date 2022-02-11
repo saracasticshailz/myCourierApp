@@ -1,14 +1,17 @@
 
 
-import * as React from 'react';
-import { View, Text, FlatList, ScrollView, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import React,{useState,useEffect} from 'react';
+import { View, Text, FlatList, ScrollView, StyleSheet, TouchableOpacity, TextInput,
+BackHandler,AsyncStorage } from 'react-native';
 import Card from '../Layouts/Card';
 import styles from '../Style/StyleGlobal';
 import AddressSelection from '../Map/AddressSelection'
+import { _retrieveData } from '../../utils/storage';
+import Constant from '../../utils/Constant';
 
 
 
-export default function Dashboard({navigation}) {
+export default function Dashboard(props) {
   const dataArray = [{
     cardTitle: 'Deliver Now',
     fromCost: 44,
@@ -28,18 +31,78 @@ export default function Dashboard({navigation}) {
   }];
 
   const [myArray, setdataArray] = React.useState(dataArray);
+  const [fromAdd,setFromAdd]=React.useState();
+  const [toAdd,settoAdd]=React.useState();
+  const [fromEloc,setfromEloc]=React.useState();
+  const [toEloc,settoEloc]=React.useState();
+ 
+ 
+  // useEffect(() => {
+  //   if(!fromAdd){
+  //     setFromAdd(_retrieveData(Constant.fromAdd));
+  //   }
+  // },[fromAdd]);
 
-  //setdataArray([...myArray,dataArray]);
   function _handleMapClick(){
     if(dataArray){
-      navigation.navigate('AddressSelection',{myData:'myadata'});
+     props. navigation.navigate('AddressSelection',{
+       myData:'myadata',
+       flag:'from'
+      // changeFromAddress:this.changeFromAddress.bind(this)
+      });
     }
     
   };
 
-  function _handleRazorPayClick(){
-    navigation.navigate('Razorpayment',{});
+  function _handleToMapClick(){
+    if(dataArray){
+     props. navigation.navigate('AddressSelection',{
+       myData:'myadata',
+       flag:'to'
+      // changeFromAddress:this.changeFromAddress.bind(this)
+      });
+    }
+    
+  };
+  function _handleBookCourier(params) {
+    alert('alert');
   }
+
+  function _handleRazorPayClick(){
+    props.navigation.navigate('Razorpayment',{});
+  }
+
+  function changeFromAddress(param) {
+    setFromAdd(param);
+  }
+
+  useEffect(() => {
+    console.log('selectedAdd :'+ JSON.stringify( props));
+    //const selectedAdd=_retrieveData(Constant.fromAdd)
+    //if(props.route.params.name == 'AddressSelection'){
+      if(props.route.params.flag == 'from'){
+        let selectedAdd=props.route.params.formattedAddress;
+        console.log('selectedAdd from: '+JSON.stringify( selectedAdd));
+        setFromAdd(selectedAdd);
+      }
+      if(props.route.params.flag == 'to'){
+        let selectedAdd=props.route.params.formattedAddress;
+        console.log('selectedAdd to: '+JSON.stringify( selectedAdd));
+        settoAdd(selectedAdd);
+      }
+      
+    // };
+    
+    
+   
+    //setFromAdd('selectedAdd');
+  //   // const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
+  //   // return () => backHandler.remove()
+
+  //   props.navigation.addListener('beforeRemove', (e) => {
+  //     e.preventDefault();
+  // });
+  }, [props.navigation]);
   return (
 
     
@@ -70,8 +133,8 @@ export default function Dashboard({navigation}) {
 
       <View style={{ flexDirection: 'row', justifyContent: "space-between", }}>
         <View style={styles.buttonStyle}>
-          <TouchableOpacity hitSlop={{ top: 20, bottom: 20, left: 50, right: 50 }}>
-            <Text style={styles.btnText}>
+          <TouchableOpacity hitSlop={{ top: 20, bottom: 20, left: 50, right: 50 }} onPress={()=>_handleBookCourier()}>
+            <Text style={styles.btnText}  >
               Book a courier &#10140;
             </Text>
           </TouchableOpacity>
@@ -94,24 +157,25 @@ export default function Dashboard({navigation}) {
 
 
     <View style={styles.underlineTextContainer}>
-        <Text style={styles.mainHeader}> Pickup Point</Text>
+        <Text style={styles.mainHeader}>Pickup Point</Text>
 
         <TouchableOpacity style={styles.btn} 
+        
         onPress={() =>  
           _handleMapClick()
           }
-        ><Text style={{margin:15,color:'#000000'}}>From</Text></TouchableOpacity>
+        ><Text style={{margin:15,color:'#000000'}}>From:{fromAdd}</Text></TouchableOpacity>
 
       </View>
 
       <View style={styles.underlineTextContainer}>
        
-
+      <Text style={styles.mainHeader}>Delivery Point</Text>
         <TouchableOpacity style={styles.btn} 
         onPress={() =>  
-          _handleMapClick()
+          _handleToMapClick()
           }
-        ><Text style={{margin:15,color:'#000000'}}>To</Text></TouchableOpacity>
+        ><Text style={{margin:15,color:'#000000'}}>To:{toAdd}</Text></TouchableOpacity>
 
       </View>
 </View>

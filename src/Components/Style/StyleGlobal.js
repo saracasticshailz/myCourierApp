@@ -78,7 +78,7 @@ marginTop:25
   },
   mainHeader:{
     fontWeight:"bold",
-    fontSize:30,
+    fontSize:20,
     color:"#000000",
     marginTop:20,
     
@@ -96,9 +96,9 @@ marginTop:25
  
   },
   inputText:{
-    height:50,
+    height:40,
     color:"#000000",
-    fontSize:25,
+    fontSize:20,
   
     
   },

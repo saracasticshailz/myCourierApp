@@ -8,7 +8,10 @@ import {
 import MapmyIndiaGL from 'mapmyindia-map-react-native-beta';
 import Mapmyindia from 'mapmyindia-restapi-react-native-beta';
 import Toast from 'react-native-simple-toast';
-
+import { IconButton, Colors } from 'react-native-paper';
+import {_storeData} from '../../utils/storage';
+import { navigate } from '../../../RootNavigation';
+import Constant from '../../utils/Constant'
 
 
 Mapmyindia.setClientId("33OkryzDZsLkd_neC1Aj859UKpsG3A1qjGwTvNO-a4nvwJvUKyfduw-8J55guJkndZuc8Z3-pPsHuWi1aWEwzA==");
@@ -23,12 +26,15 @@ class AddressSelection extends Component {
       lat: 0,
       lng: 0,
       label: '',
-      eLoc:''
+      eLoc:'',
+      formattedAddress:''
     };
+
+    console.log('AddressSelection props: '+ props);
   }
 
   async componentDidMount() {
-    this.geoCodeApi('Bhawani nagar bhandup mumbai');
+    this.geoCodeApi('chandigadh');
   }
 
   geoCodeApi(placeName) {
@@ -60,8 +66,10 @@ class AddressSelection extends Component {
     const data = JSON.parse(response);
     console.log("geocode : "+response);
           const eloc = data.results[0].eLoc;
+          const formattedAddress=data.results[0].formattedAddress;
                 this.setState({
-        eLoc:eloc
+        eLoc:eloc,
+        formattedAddress:formattedAddress
       });
 
     this._getDistanceViaeLoc();
@@ -95,8 +103,7 @@ _getDistanceViaeLoc(){
     if (this.state.query.trim().length > 0) {
       // this.setState({
       //   markerLat: this.state.lat,
-      //   markerLng: this.state.lng,
-        
+      //   markerLng: this.state.lng,       
       // });
       this.geoCodeApi(this.state.query);
       Keyboard.dismiss();
@@ -106,6 +113,41 @@ _getDistanceViaeLoc(){
     }
   }
 
+  onConfirm()
+{
+  //this.props.changeFromAddress(this.state.formattedAddress);
+  // if(formattedAddress){
+  //  _storeData('from',this.state.formattedAddress);
+   // _storeData(Constant.fromELOC,this.state.fromELOC);
+   if(this.props.route.params.flag == 'from'){
+    this.props.navigation.navigate('Dashboard',{
+      formattedAddress:this.state.formattedAddress,
+      flag:'from'
+
+    });
+   }else if(this.props.route.params.flag == 'to'){
+    this.props.navigation.navigate('Dashboard',{
+      formattedAddress:this.state.formattedAddress,
+      flag:'to'
+
+    });
+   }
+
+    
+  // }
+  
+}
+
+_storeData = async (key,value) => {
+  try {
+    await AsyncStorage.setItem(
+      key,
+      value
+    );
+  } catch (error) {
+    // Error saving data
+  }
+};
 
   render() {
     return (
@@ -121,13 +163,21 @@ _getDistanceViaeLoc(){
           <TextInput
             placeholder="Enter address details"
             style={{borderWidth: 1, borderRadius: 4,height:40,padding:10,margin:5,minWidth:200}}
-            onChangeText={text => this.setState({query: text})}
+            onChangeText={text =>this.setState({query: text}) }
           />
-          <Button title="Get Map" onPress={() => this.onClick()} />
+          <IconButton
+    icon="magnify"
+    color={Colors.black}
+    text='icon'
+    size={20}
+    onPress={() => this.onClick()}
+  />
+            <Button title="Confirm" onPress={() => this.onConfirm()} />
+
         </View>
         <MapmyIndiaGL.MapView style={{flex: 1}}>  
           <MapmyIndiaGL.Camera
-            zoomLevel={12}
+            zoomLevel={17}
             ref={c => (this.camera = c)}
             centerELoc={this.state.eLoc}
           />
@@ -136,7 +186,7 @@ _getDistanceViaeLoc(){
             id="markerId"
             title="Marker"
             show
-            zoomLevel={12}
+            zoomLevel={15}
            eLoc={this.state.eLoc}
           // style={{}}
            centerELoc={this.state.eLoc}

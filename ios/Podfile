@@ -12,7 +12,13 @@ target 'myCourierApp' do
     :hermes_enabled => false
   )
 
+  permissions_path = '../node_modules/react-native-permissions/ios'
+
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+  pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
 
   target 'myCourierAppTests' do
     inherit! :complete
@@ -24,6 +30,8 @@ target 'myCourierApp' do
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable the next line.
   use_flipper!()
+  #use_frameworks!
+
 
   post_install do |installer|
     react_native_post_install(installer)

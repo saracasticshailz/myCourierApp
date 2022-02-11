@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage } from 'react-native';
 import styles from '../Style/StyleGlobal';
 import Constant from '../../utils/Constant';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import RootNavigation from './../../../RootNavigation'
+import UserDetailsContext from '../../stateManagement/UserDetailsProvider';
+import { Toast } from 'native-base';
+import { ActivityIndicator } from 'react-native';
+//import AsyncStorageLib from '@react-native-async-storage/async-storage';
+
+
 
 
 export default function LoginScreen (props) {
@@ -12,29 +18,49 @@ export default function LoginScreen (props) {
     console.log(props)
     const [city,setCity]=useState(props.route.params.city);
     const [mobNo,setMobNo]=useState();
+    const {token,setTokentoContext}=useContext(UserDetailsContext);
+    const [otpToken,setOtpToken]=useState();
+    const [loading,isLoading]=useState(false);
    
-
+    _storeData = async () => {
+      try {
+        await AsyncStorage.setItem(
+          'token',
+          otpToken
+        );
+      } catch (error) {
+        // Error saving data
+      }
+    };
    function nagivateNext(){
    if(mobNo){
+     isLoading(true);
    
-    axios.post('https://stgapi.opoli.in/user/login', {'mobilenumber':'7666688829'},{})
-      .then(function(response) {
-      
+    axios.post('https://stgapi.opoli.in/user/login', 
+    {'mobilenumber':mobNo},{})
+      .then(function(response) { 
+        isLoading(false);   
       console.log(response);
       if(response.status === 200){
+        
       //  const LOGIN_TOKEN=response.data.token;
       console.log("200"+ response.status);
+     //setTokentoContext(response.data.token);
+     //var token=response.data.token;
+     setOtpToken(response.data.token);
+     _storeData();
+    // setOtpToken(response.data.token);
+      console.log('response.data.token : '+response.data.token);
+    
+    //  var token=AsyncStorage.getItem('token');
+
       props.navigation.navigate('OTP',{
-        city:city,
+        city:city,  
         mobNo:mobNo
       });
-    //  RootNavigation.navigate('OTP',{
-    //    city:city,
-    //    mobNo:mobNo
-    //  });
-    //navigation.navigate('OTP',this.state)
       }else{
         console.log('error',response);
+        isLoading(false);
       }
       
       })
@@ -47,7 +73,10 @@ export default function LoginScreen (props) {
 
 
          
-          };
+          }else{
+            alert("Enter valid Details!")
+          }
+        
  
      
      
@@ -55,7 +84,9 @@ export default function LoginScreen (props) {
   
     return (
 <View style={styles.mainView}>
-    <View style={styles.headerView}>
+    
+      
+      <View style={styles.headerView}>
     <Text style={styles.mainHeader}>Enter your phone</Text>
  <Text style={styles.smallHeader}>You will receive SMS on this number</Text>
     </View>
@@ -74,7 +105,13 @@ export default function LoginScreen (props) {
           //  onSubmitEditing={() => this.nagivateNext()}
             onChangeText={text => setMobNo(text)}/>
         </View>
+
+
         <Text style={styles.smallHeader}>By processing ,I approve to the Terms and conditions</Text>
+       
+        <View>
+        {loading && <ActivityIndicator color={"#000000"} />}
+      </View>
        <TouchableOpacity style={styles.bottomView}  
        onPress={() => 
        nagivateNext()}>
@@ -88,86 +125,3 @@ export default function LoginScreen (props) {
     );
   
 }
-
-// const styles = StyleSheet.create({
-//     mainView:{
-//     flex:1,
-//     },
-
-//   container: {
-//     flexDirection: 'column', 
-//     flexGrow: 1,
-//     backgroundColor: '#ffffff',   
-//     justifyContent: 'flex-end',
-//   },
-//   logo:{
-//     fontWeight:"bold",
-//     fontSize:50,
-//     color:"#fb5b5a",
-//     marginBottom:40
-//   },
-//   headerView:{
-// marginLeft:15,
-// marginTop:25
-//   },
-//   smallHeader:{
-//     fontSize:15,
-//     color:'#000000',
-//     marginLeft:15,
-//     marginTop:10
-//    // marginLeft:'10'
- 
-//   },
-//   mainHeader:{
-//     fontWeight:"bold",
-//     fontSize:30,
-//     color:"#000000",
-//     marginTop:20,
-    
-//   },
-//   inputView:{
-//    flexDirection:'row',
-//     marginTop:20,
-//     padding:10,
-//     fontSize:25,
-//     borderColor:'#d3d3d3',
-//     borderWidth:5,
-//     borderRadius:10,
-//     marginLeft:15,
-//     marginRight:15
- 
-//   },
-//   inputText:{
-//     height:50,
-//     color:"#000000",
-//     fontSize:25,
-  
-    
-//   },
-//   forgot:{
-//     color:"white",
-//     fontSize:11
-//   },
-//   loginBtn:{
-//     width:"100%",
-//     backgroundColor:"#0000FF",
-//     borderRadius:25,
-//     height:50,
-//     alignItems:"center",
-//     justifyContent:"center",
-//     marginTop:40,
-//     marginBottom:10 
-//   },
-//   loginText:{
-//     color:"white"
-//   },
-//   bottomView: {
-//     width: '100%',
-//     height: 50,
-//     backgroundColor: '#EE5407',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     position: 'absolute', 
-//     bottom: 0, 
-//   }
-// })

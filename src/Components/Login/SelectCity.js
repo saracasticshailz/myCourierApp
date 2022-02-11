@@ -1,7 +1,7 @@
 
 import { useNavigation } from '@react-navigation/native';
 import React,{useState} from 'react';
-import { View, Text, FlatList, ScrollView, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, FlatList, ScrollView, StyleSheet, TouchableOpacity, TextInput, SafeAreaView } from 'react-native';
 import { State } from 'react-native-gesture-handler';
 import MiniCard from '../Layouts/MiniCard';
 import styles from '../Style/StyleGlobal';
@@ -84,7 +84,7 @@ const cityArray = [{
       justifyContent: 'center',      
     }}>
 
-      <ScrollView
+      <SafeAreaView
         scrollEnabled={true}>
      <View>
      <FlatList
@@ -117,7 +117,7 @@ const cityArray = [{
         />
          </View>  
        
-               </ScrollView>
+               </SafeAreaView>
     </View>
   );
 }

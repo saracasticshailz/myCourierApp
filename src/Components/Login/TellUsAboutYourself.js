@@ -2,12 +2,12 @@
 
 import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
-import { View, Text, FlatList, ScrollView, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, FlatList, ScrollView, StyleSheet, SafeAreaView,TouchableOpacity, TextInput } from 'react-native';
 import MiniCard from '../Layouts/MiniCard';
 import styles from '../Style/StyleGlobal';
 
 
-export default function TellUsAboutYourself({navigation}) {
+export default function TellUsAboutYourself(props) {
 
   //const navigation=useNavigation();
   const whatDeliverydataArray = [{
@@ -77,9 +77,7 @@ const howDeliverydataArray = [{
       {/* <Text>Dashboard Screen</Text> */}
 
 
-      <ScrollView
-        scrollEnabled={true}
-      >
+      <SafeAreaView style={{flex: 1}}>
         <Text style={styles.mainHeader}>Tell us about yourself</Text>
         <Text style={styles.smallHeader}>So that we can make your deliveries smoother</Text>
 
@@ -159,12 +157,12 @@ const howDeliverydataArray = [{
 
 
 
-      </ScrollView>
+</SafeAreaView>
 
      
 
       <TouchableOpacity style={styles.bottomView} 
-        onPress={() => navigation.navigate('WhatsYourName')}>
+        onPress={() => props.navigation.navigate('WhatsYourName')}>
           <Text style={styles.loginText}>SUBMIT</Text>
         </TouchableOpacity>
 
