@@ -8,6 +8,7 @@ import RootNavigation from './../../../RootNavigation'
 import UserDetailsContext from '../../stateManagement/UserDetailsProvider';
 import { Toast } from 'native-base';
 import { ActivityIndicator } from 'react-native';
+import { _storeData } from '../../utils/storage';
 //import AsyncStorageLib from '@react-native-async-storage/async-storage';
 
 
@@ -18,37 +19,38 @@ export default function LoginScreen (props) {
     console.log(props)
     const [city,setCity]=useState(props.route.params.city);
     const [mobNo,setMobNo]=useState();
-    const {token,setTokentoContext}=useContext(UserDetailsContext);
+   // const {token,setTokentoContext}=useContext(UserDetailsContext);
     const [otpToken,setOtpToken]=useState();
     const [loading,isLoading]=useState(false);
    
-    _storeData = async () => {
-      try {
-        await AsyncStorage.setItem(
-          'token',
-          otpToken
-        );
-      } catch (error) {
-        // Error saving data
-      }
-    };
+    // _storeData = async () => {
+    //   try {
+    //     await AsyncStorage.setItem(
+    //       'token',
+    //       otpToken
+    //     );
+    //   } catch (error) {
+    //     // Error saving data
+    //   }
+    // };
    function nagivateNext(){
    if(mobNo){
      isLoading(true);
    
     axios.post('https://stgapi.opoli.in/user/login', 
-    {'mobilenumber':mobNo},{})
+    {'mobilenumber':mobNo},{'Content-type': 'Application/json',
+    Accept: 'Application/json',})
       .then(function(response) { 
         isLoading(false);   
       console.log(response);
       if(response.status === 200){
         
       //  const LOGIN_TOKEN=response.data.token;
-      console.log("200"+ response.status);
+      console.log("200"+ response.status.token);
      //setTokentoContext(response.data.token);
      //var token=response.data.token;
      setOtpToken(response.data.token);
-     _storeData();
+     _storeData(Constant.token,response.data.token);
     // setOtpToken(response.data.token);
       console.log('response.data.token : '+response.data.token);
     
@@ -68,6 +70,7 @@ export default function LoginScreen (props) {
       .catch(function(error) {
       
       console.log(error);
+      isLoading(false);
       
       }); 
 

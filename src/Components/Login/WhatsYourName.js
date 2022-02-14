@@ -5,6 +5,8 @@ import DeviceInfo from 'react-native-device-info';
 import Geolocation from '@react-native-community/geolocation';
 import { Toast } from 'native-base';
 import axios from 'axios';
+import { _storeData } from '../../utils/storage';
+import Constant from '../../utils/Constant';
 
 export default function WhatsYourName(props) {
   const [FName ,setFName]=useState();
@@ -152,6 +154,7 @@ export default function WhatsYourName(props) {
       console.log('res : '+JSON.stringify(response));
       if(response.status === 200){
       props.navigation.navigate('Dashboard',{});
+      _storeData(Constant.isLogin,true);
       
       }
       else{

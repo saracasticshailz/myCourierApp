@@ -32,18 +32,25 @@ import AddressSelection from './src/Components/Map/AddressSelection';
 import DistanceApiMap from './src/Components/Map/DistanceApiMap'
 import SelectCity from './src/Components/Login/SelectCity';
 import { UserDetailsContext, UserDetailsProvider } from './src/stateManagement/UserDetailsProvider';
+import Constant from './src/utils/Constant';
+import { _retrieveData } from './src/utils/storage';
+import AutoSuggestActivity from './src/Components/Map/AutoSuggestActivity';
 const Stack= createNativeStackNavigator();
 
 class AppContainer extends React.Component {
-  
+constructor(props){
+ 
+    super(props);
+   
+
+}
+
+
+
   render (){
-    return(
-      // 
-        
-     
-      <NavigationContainer  ref={navigationRef}>
-     
-        <Stack.Navigator initialRouteName='SelectCity'>
+    return(     
+      <NavigationContainer  ref={navigationRef}>  
+        <Stack.Navigator initialRouteName='AutoSuggestActivity'>
           <Stack.Screen name='LoginScreen' component={LoginScreen} options={{title:'Login'}}></Stack.Screen>
           <Stack.Screen name='OTP' component={OTP} options={{title:'OTP'}}></Stack.Screen>
           <Stack.Screen name='Dashboard' component={Dashboard} options={{title:'Dashboard'}}></Stack.Screen>
@@ -56,10 +63,11 @@ class AppContainer extends React.Component {
           <Stack.Screen name='AddressSelection' component={AddressSelection}options={{title:'AddressSelection'}}></Stack.Screen>
           <Stack.Screen name='DistanceApiMap' component={DistanceApiMap}options={{title:'Distance Map'}}></Stack.Screen>
           <Stack.Screen name='SelectCity' component={SelectCity}options={{title:'Select City'}}></Stack.Screen>
-        </Stack.Navigator>
-    
+          <Stack.Screen name='AutoSuggestActivity' component={AutoSuggestActivity}options={{title:'AutoSuggestActivity'}}></Stack.Screen>
+
+        </Stack.Navigator>    
       </NavigationContainer>
-      // 
+
     )
   }
 }
@@ -73,4 +81,19 @@ const App=()=>
 }
 
 export default App;
+
+export const landing_page=()=>{
+  const isLogin =_retrieveData(Constant.isLogin).then((flag)=>{
+    console.log('login flag : '+flag);
+  isLogin =flag;
+  
+   
+  });
+  if(isLogin)
+  {
+  return 'Dashboard';
+  }else{
+  return 'SelectCity';
+  }
+}
 

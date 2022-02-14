@@ -15,6 +15,7 @@
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
+    "@turf/helpers": "^6.5.0",
     "axios": "^0.25.0",
     "mapmyindia-map-react-native-beta": "^0.3.2",
     "mapmyindia-restapi-react-native-beta": "^0.0.12",

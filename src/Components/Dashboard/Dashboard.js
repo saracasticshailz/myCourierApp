@@ -55,13 +55,13 @@ export default function Dashboard(props) {
   };
 
   function _handleToMapClick(){
-    if(dataArray){
+   // if(dataArray){
      props. navigation.navigate('AddressSelection',{
        myData:'myadata',
        flag:'to'
       // changeFromAddress:this.changeFromAddress.bind(this)
       });
-    }
+  //  }
     
   };
   function _handleBookCourier(params) {
@@ -77,21 +77,26 @@ export default function Dashboard(props) {
   }
 
   useEffect(() => {
-    console.log('selectedAdd :'+ JSON.stringify( props));
+    console.log('selectedAdd on Dashboard :'+ JSON.stringify( props));
     //const selectedAdd=_retrieveData(Constant.fromAdd)
-    //if(props.route.params.name == 'AddressSelection'){
+    //if(props.route.params.name){
+      
       if(props.route.params.flag == 'from'){
+        // _retrieveData('from').then((data)=>{
+        //   console.log('data : '+JSON.stringify( data));
+        // });
         let selectedAdd=props.route.params.formattedAddress;
         console.log('selectedAdd from: '+JSON.stringify( selectedAdd));
         setFromAdd(selectedAdd);
       }
       if(props.route.params.flag == 'to'){
+        
         let selectedAdd=props.route.params.formattedAddress;
         console.log('selectedAdd to: '+JSON.stringify( selectedAdd));
         settoAdd(selectedAdd);
       }
       
-    // };
+  //   };
     
     
    
@@ -102,7 +107,9 @@ export default function Dashboard(props) {
   //   props.navigation.addListener('beforeRemove', (e) => {
   //     e.preventDefault();
   // });
-  }, [props.navigation]);
+  }
+  //, [props.navigation]
+  );
   return (
 
     

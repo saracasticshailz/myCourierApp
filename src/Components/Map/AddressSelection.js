@@ -9,7 +9,7 @@ import MapmyIndiaGL from 'mapmyindia-map-react-native-beta';
 import Mapmyindia from 'mapmyindia-restapi-react-native-beta';
 import Toast from 'react-native-simple-toast';
 import { IconButton, Colors } from 'react-native-paper';
-import {_storeData} from '../../utils/storage';
+import {_storeData , _retrieveData} from '../../utils/storage';
 import { navigate } from '../../../RootNavigation';
 import Constant from '../../utils/Constant'
 
@@ -116,16 +116,20 @@ _getDistanceViaeLoc(){
   onConfirm()
 {
   //this.props.changeFromAddress(this.state.formattedAddress);
-  // if(formattedAddress){
+   if( this.state.formattedAddress){
+    console.log(this.state.formattedAddress);
   //  _storeData('from',this.state.formattedAddress);
-   // _storeData(Constant.fromELOC,this.state.fromELOC);
+  //   _storeData(Constant.fromELOC,this.state.fromELOC);
+
    if(this.props.route.params.flag == 'from'){
     this.props.navigation.navigate('Dashboard',{
       formattedAddress:this.state.formattedAddress,
       flag:'from'
 
     });
-   }else if(this.props.route.params.flag == 'to'){
+   }else
+    if(this.props.route.params.flag == 'to'){
+      console.log('inside to : '+this.state.formattedAddress);
     this.props.navigation.navigate('Dashboard',{
       formattedAddress:this.state.formattedAddress,
       flag:'to'
@@ -134,20 +138,20 @@ _getDistanceViaeLoc(){
    }
 
     
-  // }
+  }
   
 }
 
-_storeData = async (key,value) => {
-  try {
-    await AsyncStorage.setItem(
-      key,
-      value
-    );
-  } catch (error) {
-    // Error saving data
-  }
-};
+// _storeData = async (key,value) => {
+//   try {
+//     await AsyncStorage.setItem(
+//       key,
+//       value
+//     );
+//   } catch (error) {
+//     // Error saving data
+//   }
+// };
 
   render() {
     return (

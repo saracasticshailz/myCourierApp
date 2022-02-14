@@ -96,9 +96,9 @@ marginTop:25
  
   },
   inputText:{
-    height:40,
+    height:45,
     color:"#000000",
-    fontSize:20,
+    fontSize:18,
   
     
   },

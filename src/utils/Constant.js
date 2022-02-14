@@ -4,6 +4,10 @@ export default {
     fromAdd:'from',
     toELOC:'toELOC',
     toAdd:'to',
+    isLogin:false,
+
+
+    token:'token',
    
     COLOR: {
       ORANGE: '#C50',
