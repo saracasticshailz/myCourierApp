@@ -10,6 +10,8 @@ import { _retrieveData } from '../../utils/storage';
 import Constant from '../../utils/Constant';
 import MapmyIndiaGL from 'mapmyindia-map-react-native-beta';
 import Mapmyindia from 'mapmyindia-restapi-react-native-beta';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Button } from 'react-native-paper';
 
 
 
@@ -40,6 +42,11 @@ export default function Dashboard(props) {
   const [totalDistance,settotalDistance]=React.useState();
   const [totalDistanceKM,settotalDistanceKM]=React.useState();
   const [totalDue,settotalDue]=React.useState();
+  const [length,setLength]=React.useState();
+  const [breadth,setBreadth]=React.useState();
+  const [weight,setWeight]=React.useState();
+  const [height,seHeight]=React.useState();
+  const [quantity,setquantity]=React.useState();
 
  
  
@@ -48,6 +55,49 @@ export default function Dashboard(props) {
   //     setFromAdd(_retrieveData(Constant.fromAdd));
   //   }
   // },[fromAdd]);
+
+  function _calculatePricing(){
+    var body={
+      "distance":totalDistanceKM,
+    "cateogryType":"electric",
+    "value":"5000",
+    "weight":"0.1",
+    "length":"12",
+    "breadth":"12",
+    "height":"12",
+    "quantity":"21",
+    "isPeaktime":true}
+    axios.post('https://stgapi.opoli.in/pricing/calculate', 
+    body,{'Content-type': 'Application/json',
+    Accept: 'Application/json',})
+      .then(function(response) { 
+        isLoading(false);   
+      console.log(response);
+      if(response.status === 200){
+
+      console.log('response : '+response);
+    
+    //  var token=AsyncStorage.getItem('token');
+
+      // props.navigation.navigate('OTP',{
+      //   city:city,  
+      //   mobNo:mobNo
+      // });
+      }else{
+        console.log('error',response);
+        isLoading(false);
+      }
+      
+      })
+      
+      .catch(function(error) {
+      
+      console.log(error);
+      isLoading(false);
+      
+      }); 
+
+  }
 
   function _handleMapClick(){
     if(dataArray){
@@ -124,6 +174,7 @@ export default function Dashboard(props) {
           : min + ' ' + 'min.';
       }
     }
+
     
   useEffect(() => {
     console.log('selectedAdd on Dashboard :'+ JSON.stringify( props));
@@ -171,6 +222,9 @@ export default function Dashboard(props) {
 
   
   return (
+    <View style={styles.mainView}>
+<ScrollView>
+
 
     
 <View>
@@ -247,7 +301,134 @@ export default function Dashboard(props) {
       </View>
 
       <Text style={styles.mainHeader} > Total Distance {totalDistanceKM}</Text>
+
+      <View >
+        <View style={styles.inputViewForSize}>
+          {/* <TouchableOpacity hitSlop={{ top: 20, bottom: 20, left: 50, right: 50 }} onPress={()=>_handleBookCourier()}>
+            <Text style={styles.btnText}  >
+              Book a courier &#10140;
+            </Text>
+          </TouchableOpacity> */}
+          <Text style={styles.smallHeader}>Weight</Text>
+          <View style={{flexDirection:'row',justifyContent:'center',alignContent:'center'}}>
+          <TextInput 
+                 
+                 // placeholder="xxxxxxxxxx" 
+                  placeholderTextColor="#003f5c"
+                  borderColor='#000000'
+                  returnKeyLabel='Done' 
+                  returnKeyType='done' 
+                  maxLength={5}
+                  placeholder='i.e 10.8'
+                  keyboardType='decimal-pad'
+                  enablesReturnKeyAutomatically='false'
+                  onChangeText={text =>setWeight(text)}/>
+      
+                  <Text style={styles.smallHeader}>Kgs</Text>
+          </View>
+         
+        </View>
+        <View style={styles.inputViewForSize}>
+          {/* <TouchableOpacity hitSlop={{ top: 20, bottom: 20, left: 50, right: 50 }} onPress={()=>_handleBookCourier()}>
+            <Text style={styles.btnText}  >
+              Book a courier &#10140;
+            </Text>
+          </TouchableOpacity> */}
+          <Text style={styles.smallHeader}>Length</Text>
+          <View style={{flexDirection:'row',justifyContent:'center',alignContent:'center'}}>
+          <TextInput 
+                 
+                 // placeholder="xxxxxxxxxx" 
+                  placeholderTextColor="#003f5c"
+                  borderColor='#000000'
+                  returnKeyLabel='Done' 
+                  returnKeyType='done' 
+                  maxLength={5}
+                  placeholder='i.e 10.8'
+                  keyboardType='decimal-pad'
+                  enablesReturnKeyAutomatically='false'
+                  onChangeText={text =>setLength(text)}/>
+      
+                  <Text style={styles.smallHeader}>cms</Text>
+          </View>
+         
+        </View>
+        <View style={styles.inputViewForSize}>
+          <Text style={styles.smallHeader}>Breadth</Text>
+          <View style={{flexDirection:'row',justifyContent:'center',alignContent:'center'}}>
+          <TextInput 
+                 
+                 // placeholder="xxxxxxxxxx" 
+                  placeholderTextColor="#003f5c"
+                  borderColor='#000000'
+                  returnKeyLabel='Done' 
+                  returnKeyType='done' 
+                  maxLength={5}
+                  placeholder='i.e 10.8'
+                  keyboardType='decimal-pad'
+                  enablesReturnKeyAutomatically='false'
+                  onChangeText={text =>setBreadth(text)}/>
+      
+                  <Text style={styles.smallHeader}>cms</Text>
+          </View>
+         
+        </View>
+
+        <View style={styles.inputViewForSize}>
+          <Text style={styles.smallHeader}>Height</Text>
+          <View style={{flexDirection:'row',justifyContent:'center',alignContent:'center'}}>
+          <TextInput 
+                 
+                 // placeholder="xxxxxxxxxx" 
+                  placeholderTextColor="#003f5c"
+                  borderColor='#000000'
+                  returnKeyLabel='Done' 
+                  returnKeyType='done' 
+                  maxLength={5}
+                  placeholder='i.e 10.8'
+                  keyboardType='decimal-pad'
+                  enablesReturnKeyAutomatically='false'
+                  onChangeText={text =>seHeight(text)}/>
+      
+                  <Text style={styles.smallHeader}>cms</Text>
+          </View>
+         
+        </View>
+        <View style={styles.inputViewForSize}>
+          <Text style={styles.smallHeader}>Quantity</Text>
+          <View style={{flexDirection:'row',justifyContent:'center',alignContent:'center'}}>
+          <TextInput 
+                 
+                 // placeholder="xxxxxxxxxx" 
+                  placeholderTextColor="#003f5c"
+                  borderColor='#000000'
+                  returnKeyLabel='Done' 
+                  returnKeyType='done' 
+                  maxLength={5}
+                  placeholder='i.e 10.8'
+                  keyboardType='decimal-pad'
+                  enablesReturnKeyAutomatically='false'
+                  onChangeText={text =>setquantity(text)}/>
+      
+                  <Text style={styles.smallHeader}>cms</Text>
+          </View>
+         
+        </View>
+
+    
+     
+      </View>
+
 </View>
+</ScrollView>
+
+<TouchableOpacity style={styles.bottomButtonView}  
+       onPress={() => 
+        _calculatePricing()}>
+          <Text style={styles.loginText}>Submit</Text>
+        </TouchableOpacity>
+    </View>
+
   
   );
 }

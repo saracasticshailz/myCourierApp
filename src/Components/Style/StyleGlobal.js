@@ -83,6 +83,27 @@ marginTop:25
     marginTop:20,
     
   },
+  extraSmallHeader:{
+    fontSize:14,
+    color:'#000000',
+    padding:5,
+    marginLeft:5,
+    marginTop:10
+ 
+  },
+  inputViewForSize:{
+   flexDirection:'row',
+    marginTop:10,
+    padding:2,
+    fontSize:25,
+    borderColor:'#d3d3d3',
+    borderWidth:2,
+    borderRadius:10,
+    marginLeft:15,
+    marginRight:15,
+    flexDirection: 'row', justifyContent: "space-between",
+ 
+  },
   inputView:{
    flexDirection:'row',
     marginTop:20,
@@ -121,12 +142,21 @@ marginTop:25
   },
   bottomView: {
     width: '100%',
-    height: 50,
+    height: 40,
     backgroundColor: '#EE5407',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute', 
     bottom: 0, 
+  }, bottomButtonView: {
+    width: '100%',
+    height: 40,
+    backgroundColor: '#EE5407',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute', 
+    bottom: 0, 
+    marginTop:10
   },
     otpInputContainer: {
     marginBottom: 20,

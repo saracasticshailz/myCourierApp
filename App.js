@@ -41,12 +41,9 @@ class AppContainer extends React.Component {
 constructor(props){
  
     super(props);
-   
+    const Stack= createNativeStackNavigator();
 
-}
-
-
-
+};
   render (){
     return(     
       <NavigationContainer  ref={navigationRef}>  
@@ -65,7 +62,9 @@ constructor(props){
           <Stack.Screen name='SelectCity' component={SelectCity}options={{title:'Select City'}}></Stack.Screen>
           <Stack.Screen name='AutoSuggestActivity' component={AutoSuggestActivity}options={{title:'AutoSuggestActivity'}}></Stack.Screen>
 
-        </Stack.Navigator>    
+        </Stack.Navigator>  
+
+           
       </NavigationContainer>
 
     )
