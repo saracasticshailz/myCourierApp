@@ -7,16 +7,17 @@ import {
   TextInput,
   Image,
   ActivityIndicator,
+  Button
 } from 'react-native';
 import MapmyIndiaGL from 'mapmyindia-map-react-native-beta';
 import Mapmyindia from 'mapmyindia-restapi-react-native-beta';
 import {point} from '@turf/helpers';
-// import exampleIcon from '../../assets/marker.png';
+import exampleIcon from '../../assets/marker.png';
 import Toast from 'react-native-simple-toast';
 
 const styles = {
   icon: {
-    iconImage: '',
+    iconImage: exampleIcon,
     iconAllowOverlap: true,
     iconSize: 0.2,
     iconAnchor:"bottom"
@@ -34,7 +35,8 @@ class AutoSuggestActivity extends Component {
       progressBar: false,
       mapFlex: 1,
       mounted: false,
-      eLoc:''
+      eLoc:'AP5G6Q',
+      formattedAddress:''
     };
   }
 
@@ -59,10 +61,13 @@ class AutoSuggestActivity extends Component {
             for (let i = 0; i < response.suggestedLocations.length; i++) {
               arr.push([
                 response.suggestedLocations[i].placeName,
-               response.suggestedLocations[i].eLoc,
+                response.suggestedLocations[i].eLoc,
+                // [
+                //   response.suggestedLocations[i].longitude,
+                //   response.suggestedLocations[i].latitude,
+                // ],
                 response.suggestedLocations[i].placeAddress,
-                
-              ],);
+              ]);
             }
             this.setState({
               placesList: arr,
@@ -77,7 +82,7 @@ class AutoSuggestActivity extends Component {
           }
         }
 
-        //console.log(this.state.placesList);
+        console.log(this.state.placesList);
       });
     } else if (text.length <= 2) {
       this.setState({
@@ -107,26 +112,57 @@ class AutoSuggestActivity extends Component {
       clearTimeout(this.timeout);
     }
     this.timeout = setTimeout(() => {
-      console.log('calling');
+     // console.log('calling');
       this.callAutoSuggest(text.trim());
     }, 2000);
   }
 
   //onList item selection
   onPress(location) {
-      console.log('location : '+JSON.stringify( location));
-    //this.camera.moveTo(location, 1000);
-    this.camera.flyWithEloc(location[1]);
-    
+   // this.camera.moveTo(location, 1000);
+   console.log('loca : '+location);
+   this.camera.flyWithEloc(location[1],1000);
 
     this.setState({
-     // selectedPlace: [location[0], location[1]],
+      //selectedPlace: [location[0], location[1]],
       placesList: '',
       mapFlex: 1,
-      eLoc:location[1]
+     // selectedPlaceEloc:'',
+      eLoc:location[1],
+      formattedAddress:location[0]+" "+location[2]
     });
   }
 
+  onConfirm()
+  {
+    //this.props.changeFromAddress(this.state.formattedAddress);
+     if( this.state.formattedAddress){
+      console.log(this.state.formattedAddress);
+    //  _storeData('from',this.state.formattedAddress);
+    //   _storeData(Constant.fromELOC,this.state.fromELOC);
+  
+     if(this.props.route.params.flag == 'from'){
+      this.props.navigation.navigate('Dashboard',{
+        formattedAddress:this.state.formattedAddress,
+        flag:'from',
+        fromEloc:this.state.eLoc
+  
+      });
+     }else
+      if(this.props.route.params.flag == 'to'){
+        console.log('inside to : '+this.state.formattedAddress);
+      this.props.navigation.navigate('Dashboard',{
+        formattedAddress:this.state.formattedAddress,
+        flag:'to',
+        toEloc:this.state.eLoc
+  
+      });
+     }
+  
+      
+    }
+    
+  }
   //line separator for autosuggest list
   renderSeparator = () => {
     return (
@@ -167,7 +203,7 @@ class AutoSuggestActivity extends Component {
                       paddingStart: 10,
                       paddingEnd: 5,
                     }}>
-                    <Text style={{fontSize: 16}}>{dataItem.item[0]}</Text>
+                    <Text style={{fontSize: 16, color: 'grey'}}>{dataItem.item[0]}</Text>
                     <Text style={{color: 'grey', marginRight: 5}}>
                       {dataItem.item[2]}
                     </Text>
@@ -184,7 +220,10 @@ class AutoSuggestActivity extends Component {
       this.state.selectedPlace != '' ? (
         <MapmyIndiaGL.ShapeSource
           id="symbolLocationSource"
-          shape={this.state.eLoc}>
+          shape={point([
+            this.state.selectedPlace[0],
+            this.state.selectedPlace[1],
+          ])}>
           <MapmyIndiaGL.SymbolLayer
             id="symbolLocationSymbols"
             style={styles.icon}
@@ -196,7 +235,7 @@ class AutoSuggestActivity extends Component {
       <View style={{flex: 1}}>
         <View style={{flexDirection: 'row', paddingLeft: 5, paddingRight: 5}}>
           <TextInput
-            style={{flex: 1,height:50,padding:10}}
+            style={{flex: 1,height:50,padding:10,color:'#000000',}}
             placeholder="Search place.."
             value={this.state.query}
             onChangeText={text => this.onTextChange(text)}
@@ -206,27 +245,30 @@ class AutoSuggestActivity extends Component {
             hidesWhenStopped={true}
             color="blue"
           />
+             <Button title="Confirm" onPress={() => this.onConfirm()} />
         </View>
         {list}
         <MapmyIndiaGL.MapView style={{flex: this.state.mapFlex}}>
           <MapmyIndiaGL.Camera
-            zoomLevel={5}
+            zoomLevel={10}
             ref={c => (this.camera = c)}
-            centerELoc={this.state.eLoc}
-
+          //  centerCoordinate={[78.6569, 22.9734]}
+          centerELoc={this.state.eLoc}
           />
           {/* {marker} */}
-
           <MapmyIndiaGL.PointAnnotation
             id="markerId"
             title="Marker"
             show
-            zoomLevel={15}
+            zoomLevel={5}
            eLoc={this.state.eLoc}
           // style={{}}
            centerELoc={this.state.eLoc}
             >
-            <MapmyIndiaGL.Callout title={this.state.label} />
+            <MapmyIndiaGL.SymbolLayer
+            id="symbolLocationSymbols"
+            style={styles.icon}
+          />
           </MapmyIndiaGL.PointAnnotation>
         </MapmyIndiaGL.MapView>
       </View>

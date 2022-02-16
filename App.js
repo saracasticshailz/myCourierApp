@@ -50,7 +50,7 @@ constructor(props){
   render (){
     return(     
       <NavigationContainer  ref={navigationRef}>  
-        <Stack.Navigator initialRouteName='AutoSuggestActivity'>
+        <Stack.Navigator initialRouteName='SelectCity'>
           <Stack.Screen name='LoginScreen' component={LoginScreen} options={{title:'Login'}}></Stack.Screen>
           <Stack.Screen name='OTP' component={OTP} options={{title:'OTP'}}></Stack.Screen>
           <Stack.Screen name='Dashboard' component={Dashboard} options={{title:'Dashboard'}}></Stack.Screen>

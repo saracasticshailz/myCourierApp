@@ -7,6 +7,10 @@ import { Toast } from 'native-base';
 import axios from 'axios';
 import { _storeData } from '../../utils/storage';
 import Constant from '../../utils/Constant';
+import { PermissionsAndroid } from 'react-native';
+
+
+
 
 export default function WhatsYourName(props) {
   const [FName ,setFName]=useState();
@@ -132,8 +136,8 @@ export default function WhatsYourName(props) {
     "email":email,
     "password":"121212",
     "fcmtoken":"xysnsas",
-    "lat":currentLatitude,
-    "long":currentLongitude,
+    "lat":'18.990713',
+    "long":'73.116844',
     "city":"Chandigarh",
     "country":"India",
     "Device_lang":"EN",

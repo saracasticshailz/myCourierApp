@@ -12,8 +12,6 @@ import { _storeData } from '../../utils/storage';
 //import AsyncStorageLib from '@react-native-async-storage/async-storage';
 
 
-
-
 export default function LoginScreen (props) {
 
     console.log(props)
@@ -34,50 +32,51 @@ export default function LoginScreen (props) {
     //   }
     // };
    function nagivateNext(){
-   if(mobNo){
-     isLoading(true);
-   
-    axios.post('https://stgapi.opoli.in/user/login', 
-    {'mobilenumber':mobNo},{'Content-type': 'Application/json',
-    Accept: 'Application/json',})
-      .then(function(response) { 
-        isLoading(false);   
-      console.log(response);
-      if(response.status === 200){
-        
-      //  const LOGIN_TOKEN=response.data.token;
-      console.log("200"+ response.status.token);
-     //setTokentoContext(response.data.token);
-     //var token=response.data.token;
-     setOtpToken(response.data.token);
-     _storeData(Constant.token,response.data.token);
-    // setOtpToken(response.data.token);
-      console.log('response.data.token : '+response.data.token);
-    
-    //  var token=AsyncStorage.getItem('token');
+    const reg = /^[0]?[789]\d{9}$/;
+    if (reg.test(mobNo) === false) {
 
-      props.navigation.navigate('OTP',{
-        city:city,  
-        mobNo:mobNo
-      });
-      }else{
-        console.log('error',response);
-        isLoading(false);
-      }
-      
-      })
-      
-      .catch(function(error) {
-      
-      console.log(error);
-      isLoading(false);
-      
-      }); 
-
-
+      alert("Enter valid Details!");
          
           }else{
-            alert("Enter valid Details!")
+            isLoading(true);
+   
+            axios.post('https://stgapi.opoli.in/user/login', 
+            {'mobilenumber':mobNo},{'Content-type': 'Application/json',
+            Accept: 'Application/json',})
+              .then(function(response) { 
+                isLoading(false);   
+              console.log(response);
+              if(response.status === 200){
+                
+              //  const LOGIN_TOKEN=response.data.token;
+              console.log("200"+ response.status.token);
+             //setTokentoContext(response.data.token);
+             //var token=response.data.token;
+             setOtpToken(response.data.token);
+             _storeData(Constant.token,response.data.token);
+            // setOtpToken(response.data.token);
+              console.log('response.data.token : '+response.data.token);
+            
+            //  var token=AsyncStorage.getItem('token');
+        
+              props.navigation.navigate('OTP',{
+                city:city,  
+                mobNo:mobNo
+              });
+              }else{
+                console.log('error',response);
+                isLoading(false);
+              }
+              
+              })
+              
+              .catch(function(error) {
+              
+              console.log(error);
+              isLoading(false);
+              
+              }); 
+        
           }
         
  
