@@ -92,16 +92,17 @@ marginTop:25
  
   },
   inputViewForSize:{
-   flexDirection:'row',
-    marginTop:10,
-    padding:2,
-    fontSize:25,
-    borderColor:'#d3d3d3',
-    borderWidth:2,
-    borderRadius:10,
-    marginLeft:15,
-    marginRight:15,
-    flexDirection: 'row', justifyContent: "space-between",
+    width: '46%',
+    marginTop: 12,
+    borderRadius: 10,
+      marginRight:5,
+      marginLeft:5,
+    justifyContent: "space-between",
+    textAlign: 'center',
+    alignContent: 'space-between',
+    alignItems: 'center',
+    borderColor:'#000000',
+    borderWidth:1
  
   },
   inputView:{

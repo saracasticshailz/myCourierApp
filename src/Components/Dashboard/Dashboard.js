@@ -12,6 +12,8 @@ import MapmyIndiaGL from 'mapmyindia-map-react-native-beta';
 import Mapmyindia from 'mapmyindia-restapi-react-native-beta';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Button } from 'react-native-paper';
+import axios from 'axios';
+
 
 
 
@@ -40,14 +42,20 @@ export default function Dashboard(props) {
   const [fromEloc,setfromEloc]=React.useState();
   const [toEloc,settoEloc]=React.useState();
   const [totalDistance,settotalDistance]=React.useState();
-  const [totalDistanceKM,settotalDistanceKM]=React.useState();
-  const [totalDue,settotalDue]=React.useState();
-  const [length,setLength]=React.useState();
-  const [breadth,setBreadth]=React.useState();
-  const [weight,setWeight]=React.useState();
-  const [height,seHeight]=React.useState();
-  const [quantity,setquantity]=React.useState();
+  const [totalDistanceKM,settotalDistanceKM]=React.useState('');
+  const [totalDue,settotalDue]=React.useState('');
+  const [length,setLength]=React.useState('');
+  const [breadth,setBreadth]=React.useState('');
+  const [weight,setWeight]=React.useState('');
+  const [height,setHeight]=React.useState('');
+  const [quantity,setquantity]=React.useState('');
+  const [loading, isLoading] = useState(false);
+  const [token,setToken]=useState();
 
+  _retrieveData(Constant.token).then((data) => {
+    setToken(data);
+    console.log('token : ' + data);
+  });
  
  
   // useEffect(() => {
@@ -57,8 +65,20 @@ export default function Dashboard(props) {
   // },[fromAdd]);
 
   function _calculatePricing(){
+
+    if(totalDistanceKM == ''){
+      alert('please select location');
+    } else if(length == '' || breadth =='' || weight=='' || height ==  '' || quantity ==  ''){
+      alert('please mention diamensions');
+
+    }else {
+    let config = {
+      headers: {
+        'Authorization':token,
+      }
+    }
     var body={
-      "distance":totalDistanceKM,
+      "distance":'120',
     "cateogryType":"electric",
     "value":"5000",
     "weight":"0.1",
@@ -68,21 +88,12 @@ export default function Dashboard(props) {
     "quantity":"21",
     "isPeaktime":true}
     axios.post('https://stgapi.opoli.in/pricing/calculate', 
-    body,{'Content-type': 'Application/json',
-    Accept: 'Application/json',})
+    body,config)
       .then(function(response) { 
         isLoading(false);   
-      console.log(response);
+      console.log(JSON.stringify( response));
       if(response.status === 200){
-
-      console.log('response : '+response);
-    
-    //  var token=AsyncStorage.getItem('token');
-
-      // props.navigation.navigate('OTP',{
-      //   city:city,  
-      //   mobNo:mobNo
-      // });
+          alert('pricing is '+ response.data.pricing); 
       }else{
         console.log('error',response);
         isLoading(false);
@@ -96,7 +107,7 @@ export default function Dashboard(props) {
       isLoading(false);
       
       }); 
-
+    }
   }
 
   function _handleMapClick(){
@@ -137,7 +148,7 @@ export default function Dashboard(props) {
         console.log("_getDistanceViaeLoc : "+response);
         settotalDistance(data.results.distances[0][1]);
         settotalDue(data.results.durations[0][1]);
-        const KMS=getFormattedDistance(data.results.distances[0][1]);
+        const KMS=getFormattedDistance(data.results.distances[0][1] + data.results.distances[0][0]);
         settotalDistanceKM(KMS);
         console.log("KMS : "+KMS);
       
@@ -302,13 +313,9 @@ export default function Dashboard(props) {
 
       <Text style={styles.mainHeader} > Total Distance {totalDistanceKM}</Text>
 
-      <View >
+      <View style={{    flexDirection: 'row', justifyContent:'space-between',alignItems:'center'
+}}>
         <View style={styles.inputViewForSize}>
-          {/* <TouchableOpacity hitSlop={{ top: 20, bottom: 20, left: 50, right: 50 }} onPress={()=>_handleBookCourier()}>
-            <Text style={styles.btnText}  >
-              Book a courier &#10140;
-            </Text>
-          </TouchableOpacity> */}
           <Text style={styles.smallHeader}>Weight</Text>
           <View style={{flexDirection:'row',justifyContent:'center',alignContent:'center'}}>
           <TextInput 
@@ -324,7 +331,7 @@ export default function Dashboard(props) {
                   enablesReturnKeyAutomatically='false'
                   onChangeText={text =>setWeight(text)}/>
       
-                  <Text style={styles.smallHeader}>Kgs</Text>
+                  <Text style={styles.smallHeader}>gms</Text>
           </View>
          
         </View>
@@ -353,6 +360,11 @@ export default function Dashboard(props) {
           </View>
          
         </View>
+        </View>
+       
+       
+        <View  style={{    flexDirection: 'row', justifyContent:'space-between',alignItems:'center'
+}}>
         <View style={styles.inputViewForSize}>
           <Text style={styles.smallHeader}>Breadth</Text>
           <View style={{flexDirection:'row',justifyContent:'center',alignContent:'center'}}>
@@ -371,29 +383,10 @@ export default function Dashboard(props) {
       
                   <Text style={styles.smallHeader}>cms</Text>
           </View>
-         
+          
         </View>
 
-        <View style={styles.inputViewForSize}>
-          <Text style={styles.smallHeader}>Height</Text>
-          <View style={{flexDirection:'row',justifyContent:'center',alignContent:'center'}}>
-          <TextInput 
-                 
-                 // placeholder="xxxxxxxxxx" 
-                  placeholderTextColor="#003f5c"
-                  borderColor='#000000'
-                  returnKeyLabel='Done' 
-                  returnKeyType='done' 
-                  maxLength={5}
-                  placeholder='i.e 10.8'
-                  keyboardType='decimal-pad'
-                  enablesReturnKeyAutomatically='false'
-                  onChangeText={text =>seHeight(text)}/>
-      
-                  <Text style={styles.smallHeader}>cms</Text>
-          </View>
-         
-        </View>
+        
         <View style={styles.inputViewForSize}>
           <Text style={styles.smallHeader}>Quantity</Text>
           <View style={{flexDirection:'row',justifyContent:'center',alignContent:'center'}}>
@@ -412,21 +405,45 @@ export default function Dashboard(props) {
       
                   <Text style={styles.smallHeader}>cms</Text>
           </View>
-         
         </View>
 
-    
      
       </View>
+      <View style={{    flexDirection: 'row', justifyContent:'space-between',alignItems:'center'
+}}>
+    <View style={styles.inputViewForSize}>
+          <Text style={styles.smallHeader}>Height</Text>
+          <View style={{flexDirection:'row',justifyContent:'center',alignContent:'center'}}>
+          <TextInput 
+                 
+                 // placeholder="xxxxxxxxxx" 
+                  placeholderTextColor="#003f5c"
+                  borderColor='#000000'
+                  returnKeyLabel='Done' 
+                  returnKeyType='done' 
+                  maxLength={5}
+                  placeholder='i.e 10.8'
+                  keyboardType='decimal-pad'
+                  enablesReturnKeyAutomatically='false'
+                  onChangeText={text =>setHeight(text)}/>
+      
+                  <Text style={styles.smallHeader}>cms</Text>
+          </View>
+         
+        </View>
+    </View>
 
 </View>
 </ScrollView>
-
+<View style={{marginTop:50}}>
 <TouchableOpacity style={styles.bottomButtonView}  
        onPress={() => 
         _calculatePricing()}>
           <Text style={styles.loginText}>Submit</Text>
         </TouchableOpacity>
+</View>
+
+
     </View>
 
   

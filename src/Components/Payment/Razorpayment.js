@@ -11,7 +11,7 @@ export default class Razorpayment extends React.Component {
             description: 'Test Account',
             image: 'https://i.imgur.com/3g7nmJC.png',
             currency: 'INR',
-            key: 'rzp_test_G9jEe7A6sk25xn',
+            key: 'rzp_test_OTST50hkKqPLRt',
             amount: '5000',
             name: 'RunnerSingh',
             prefill: {

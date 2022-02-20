@@ -35,6 +35,7 @@ import { UserDetailsContext, UserDetailsProvider } from './src/stateManagement/U
 import Constant from './src/utils/Constant';
 import { _retrieveData } from './src/utils/storage';
 import AutoSuggestActivity from './src/Components/Map/AutoSuggestActivity';
+import CurrentLocationActivity from './src/Components/Map/CurrentLocationActivity';
 const Stack= createNativeStackNavigator();
 
 class AppContainer extends React.Component {
@@ -47,7 +48,7 @@ constructor(props){
   render (){
     return(     
       <NavigationContainer  ref={navigationRef}>  
-        <Stack.Navigator initialRouteName='SelectCity'>
+        <Stack.Navigator initialRouteName='LoginScreen'>
           <Stack.Screen name='LoginScreen' component={LoginScreen} options={{title:'Login'}}></Stack.Screen>
           <Stack.Screen name='OTP' component={OTP} options={{title:'OTP'}}></Stack.Screen>
           <Stack.Screen name='Dashboard' component={Dashboard} options={{title:'Dashboard'}}></Stack.Screen>
@@ -61,7 +62,7 @@ constructor(props){
           <Stack.Screen name='DistanceApiMap' component={DistanceApiMap}options={{title:'Distance Map'}}></Stack.Screen>
           <Stack.Screen name='SelectCity' component={SelectCity}options={{title:'Select City'}}></Stack.Screen>
           <Stack.Screen name='AutoSuggestActivity' component={AutoSuggestActivity}options={{title:'AutoSuggestActivity'}}></Stack.Screen>
-
+          <Stack.Screen name='CurrentLocationActivity' component={CurrentLocationActivity} options={{title:'CurrentLocationActivity'}}></Stack.Screen>
         </Stack.Navigator>  
 
            

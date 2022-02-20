@@ -9,6 +9,7 @@ import axios from "axios";
 import { Toast } from 'native-base';
 import { _retrieveData } from '../../utils/storage';
 import Constant from '../../utils/Constant';
+import { blue50 } from 'react-native-paper/lib/typescript/styles/colors';
 
 
 export default function OTP(props) {
@@ -55,21 +56,23 @@ export default function OTP(props) {
           'Authorization':token,
         }
       }
+      let body={ otp: otp };
       axios.post('https://stgapi.opoli.in/user/verifyotp',
-      { otp: otp }, config)
+      body, config)
       .then(function (response) {
         isLoading(false);
         console.log(response);
         if (response.status === 200) {
          
 
-          props.navigation.navigate('TellUsAboutYourself', {
+          props.navigation.navigate('WhatsYourName', {
             city: city,
             mobNo: mobNo
           });
         } else {
           console.log('error', response);
           isLoading(false);
+         // alert('Invalid OTP');
         }
 
       })
@@ -134,6 +137,33 @@ export default function OTP(props) {
       //this.props.navigation.navigate('TellUsAboutYourself',this.state);
     }
   }
+  function ResendOTP() {
+    axios.post('https://stgapi.opoli.in/user/login', 
+    {'mobilenumber':mobNo},{'Content-type': 'Application/json',
+    Accept: 'Application/json',})
+      .then(function(response) { 
+        isLoading(false);   
+      console.log(response);
+      if(response.status === 200){
+      setotp('');
+
+     alert("OTP sent on "+mobNo);
+    
+      }else{
+        console.log('error',response);
+        isLoading(false);
+      }
+      
+      })
+      
+      .catch(function(error) {
+      
+      console.log(error);
+      isLoading(false);
+      
+      }); 
+    
+  }
   return (
     <View style={styles.mainView}>
       <View style={styles.headerView}>
@@ -155,7 +185,12 @@ export default function OTP(props) {
         inputCount={6}
         returnKeyType='done'
       />
+
+      <Text style={{textAlign:'right',marginRight:15 ,color:'#0000ff'}} onPress={()=>ResendOTP()}>Resend OTP</Text>
       {loading && <ActivityIndicator color={"#000000"} />}
+
+
+
       <TouchableOpacity style={styles.bottomView} onPress={() =>
 
         _handleOTPClick()

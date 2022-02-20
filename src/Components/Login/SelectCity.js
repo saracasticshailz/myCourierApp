@@ -14,7 +14,12 @@ export default function SelectCity(props) {
   //const navigation=useNavigation();
   const [cityName, setCity] = useState('');
 const [checked,SetChecked] = useState(true);
-const cityArray = [{
+const cityArray = [
+  {
+    cityName: 'Chandigarh',
+    _id: 'H000'
+  },
+  {
   cityName: 'Mumbai',
   _id: 'H001'
 },
