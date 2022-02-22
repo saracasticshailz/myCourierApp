@@ -5,6 +5,8 @@ export default {
     toELOC:'toELOC',
     toAdd:'to',
     isLogin:false,
+    lat:'lat',
+    longitude:'long',
 
 
     token:'token',

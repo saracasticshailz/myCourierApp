@@ -8,12 +8,13 @@ import RootNavigation from './../../../RootNavigation'
 import UserDetailsContext from '../../stateManagement/UserDetailsProvider';
 import { Toast } from 'native-base';
 import { ActivityIndicator } from 'react-native';
-import { _storeData } from '../../utils/storage';
+import { _retrieveData, _storeData } from '../../utils/storage';
 import CheckBox from '@react-native-community/checkbox';
 import DeviceInfo from 'react-native-device-info';
 import Geolocation from '@react-native-community/geolocation';
 import { PermissionsAndroid } from 'react-native';
 import SmsRetriever from 'react-native-sms-retriever';
+import Mapmyindia from 'mapmyindia-restapi-react-native-beta';
 
 
 //import AsyncStorageLib from '@react-native-async-storage/async-storage';
@@ -28,6 +29,18 @@ export default function LoginScreen (props) {
     const [otpToken,setOtpToken]=useState();
     const [loading,isLoading]=useState(false);
     const [toggleCheckBox, setToggleCheckBox] = useState(false)
+    const [
+      currentLongitude,
+      setCurrentLongitude
+    ] = useState('...');
+    const [
+      currentLatitude,
+      setCurrentLatitude
+    ] = useState('...');
+    const [
+      locationStatus,
+      setLocationStatus
+    ] = useState('');
 
    
     // _storeData = async () => {
@@ -97,51 +110,47 @@ export default function LoginScreen (props) {
      
     }
   }
-   
-  const [
-    currentLongitude,
-    setCurrentLongitude
-  ] = useState('...');
-  const [
-    currentLatitude,
-    setCurrentLatitude
-  ] = useState('...');
-  const [
-    locationStatus,
-    setLocationStatus
-  ] = useState('');
 
-  // useEffect(() => {
-  //   const requestLocationPermission = async () => {
-  //     if (Platform.OS === 'ios') {
-  //       getOneTimeLocation();
-  //       subscribeLocationLocation();
-  //     } else {
-  //       try {
-  //         const granted = await PermissionsAndroid.request(
-  //           PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-  //           {
-  //             title: 'Location Access Required',
-  //             message: 'This App needs to Access your location',
-  //           },
-  //         );
-  //         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-  //           //To Check, If Permission is granted
-  //           getOneTimeLocation();
-  //           subscribeLocationLocation();
-  //         } else {
-  //           setLocationStatus('Permission Denied');
-  //         }
-  //       } catch (err) {
-  //         console.warn(err);
-  //       }
-  //     }
-  //   };
-  //   requestLocationPermission();
-  //   return () => {
-  //     Geolocation.clearWatch(watchID);
-  //   };
-  // }, []);
+  useEffect(() => {
+    const requestLocationPermission = async () => {
+      if (Platform.OS === 'ios') {
+        getOneTimeLocation();
+        subscribeLocationLocation();
+      } else {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+              title: 'Location Access Required',
+              message: 'This App needs to Access your location',
+            },
+          );
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            //To Check, If Permission is granted
+            getOneTimeLocation();
+            subscribeLocationLocation();
+          } else {
+            setLocationStatus('Permission Denied');
+          }
+        } catch (err) {
+          console.warn(err);
+        }
+      }
+    };
+
+    requestLocationPermission();
+    return () => {
+      Geolocation.clearWatch(watchID);
+    };
+  }, []);
+
+ const revGeoCodeApi = (latitude, longitude) =>{
+    Mapmyindia.rev_geocode({lat: latitude, lng: longitude}, response => {
+      console.log("revGeoCodeApi response"+JSON.stringify( response));
+      Toast.show(response.results[0].formatted_address, Toast.SHORT);
+     
+    });
+  }
 
   const getOneTimeLocation = () => {
     setLocationStatus('Getting Location ...');
@@ -157,13 +166,16 @@ export default function LoginScreen (props) {
         //getting the Latitude from the location json
         const currentLatitude =
           JSON.stringify(position.coords.latitude);
+          _storeData(Constant.longitude,currentLongitude);
+
+          _storeData(Constant.lat,currentLatitude)
 
         //Setting Longitude state
         setCurrentLongitude(currentLongitude);
 
         //Setting Longitude state
         setCurrentLatitude(currentLatitude);
-
+        revGeoCodeApi(currentLatitude,currentLongitude);
 
          
       },
@@ -240,7 +252,6 @@ export default function LoginScreen (props) {
             returnKeyLabel='Done' 
             returnKeyType='done' 
             onFocus={() => _onPhoneNumberPressed()}            
-          //  onSubmitEditing={() => this.nagivateNext()}
             onChangeText={text => setMobNo(text)}/>
         </View>
 <View style={{flexDirection:'row',alignContent:'center',marginTop:5,marginLeft:10}}>
