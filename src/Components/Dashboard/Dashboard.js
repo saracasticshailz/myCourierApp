@@ -18,12 +18,13 @@ import axios from 'axios';
 
 
 export default function Dashboard(props) {
-  const dataArray = [{
-    cardTitle: 'Deliver Now',
-    fromCost: 44,
-    process_id: '001',
-    imageuri: require('../../assets/clock.png')
-  },
+  const dataArray = [
+  //   {
+  //   cardTitle: 'Deliver Now',
+  //   fromCost: 44,
+  //   process_id: '001',
+  //   imageuri: require('../../assets/clock.png')
+  // },
   {
     cardTitle: 'Schedule',
     fromCost: 20,
@@ -67,9 +68,9 @@ export default function Dashboard(props) {
   function _calculatePricing(){
 
     if(totalDistanceKM == ''){
-      alert('please select location');
+      alert('Please select location');
     } else if(length == '' || breadth =='' || weight=='' || height ==  '' || quantity ==  ''){
-      alert('please mention diamensions');
+      alert('Please mention diamensions');
 
     }else {
     let config = {
@@ -264,7 +265,7 @@ export default function Dashboard(props) {
 
 
       <View style={{ flexDirection: 'row', justifyContent: "space-between", }}>
-        <View style={styles.buttonStyle}>
+        <View style={styles.buttonHighlightesStyle}>
           <TouchableOpacity hitSlop={{ top: 20, bottom: 20, left: 50, right: 50 }} onPress={()=>_handleBookCourier()}>
             <Text style={styles.btnText}  >
               Book a courier &#10140;
@@ -328,7 +329,9 @@ export default function Dashboard(props) {
                   maxLength={5}
                   placeholder='i.e 10.8'
                   keyboardType='decimal-pad'
+                  style={styles.inputText}           
                   enablesReturnKeyAutomatically='false'
+                  
                   onChangeText={text =>setWeight(text)}/>
       
                   <Text style={styles.smallHeader}>gms</Text>
@@ -346,6 +349,7 @@ export default function Dashboard(props) {
           <TextInput 
                  
                  // placeholder="xxxxxxxxxx" 
+                 style={styles.inputText}           
                   placeholderTextColor="#003f5c"
                   borderColor='#000000'
                   returnKeyLabel='Done' 
@@ -372,6 +376,7 @@ export default function Dashboard(props) {
                  
                  // placeholder="xxxxxxxxxx" 
                   placeholderTextColor="#003f5c"
+                  style={styles.inputText}           
                   borderColor='#000000'
                   returnKeyLabel='Done' 
                   returnKeyType='done' 
@@ -401,9 +406,11 @@ export default function Dashboard(props) {
                   placeholder='i.e 10.8'
                   keyboardType='decimal-pad'
                   enablesReturnKeyAutomatically='false'
-                  onChangeText={text =>setquantity(text)}/>
+                  onChangeText={text =>setquantity(text)}
+                  style={styles.inputText}           
+                  />
       
-                  <Text style={styles.smallHeader}>cms</Text>
+                  <Text style={styles.smallHeader}>units</Text>
           </View>
         </View>
 
@@ -425,7 +432,9 @@ export default function Dashboard(props) {
                   placeholder='i.e 10.8'
                   keyboardType='decimal-pad'
                   enablesReturnKeyAutomatically='false'
-                  onChangeText={text =>setHeight(text)}/>
+                  onChangeText={text =>setHeight(text)}
+                  style={styles.inputText}           
+                  />
       
                   <Text style={styles.smallHeader}>cms</Text>
           </View>
@@ -439,7 +448,7 @@ export default function Dashboard(props) {
 <TouchableOpacity style={styles.bottomButtonView}  
        onPress={() => 
         _calculatePricing()}>
-          <Text style={styles.loginText}>Submit</Text>
+          <Text style={styles.loginText}>Confirm &#38; Book</Text>
         </TouchableOpacity>
 </View>
 

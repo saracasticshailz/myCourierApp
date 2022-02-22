@@ -13,6 +13,8 @@ import CheckBox from '@react-native-community/checkbox';
 import DeviceInfo from 'react-native-device-info';
 import Geolocation from '@react-native-community/geolocation';
 import { PermissionsAndroid } from 'react-native';
+import SmsRetriever from 'react-native-sms-retriever';
+
 
 //import AsyncStorageLib from '@react-native-async-storage/async-storage';
 
@@ -207,6 +209,16 @@ export default function LoginScreen (props) {
       },
     );
   };
+
+  _onPhoneNumberPressed = async () => {
+    try {
+      const phoneNumber = await SmsRetriever.requestPhoneNumber();
+      console.log(phoneNumber);
+      setMobNo(phoneNumber);
+    } catch (error) {
+      console.log(JSON.stringify(error));
+    }
+   };
     return (
 <View style={styles.mainView}>
     
@@ -227,6 +239,7 @@ export default function LoginScreen (props) {
             maxLength={10}
             returnKeyLabel='Done' 
             returnKeyType='done' 
+            onFocus={() => _onPhoneNumberPressed()}            
           //  onSubmitEditing={() => this.nagivateNext()}
             onChangeText={text => setMobNo(text)}/>
         </View>

@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         textAlign: "center",
       },
+      
     mainView:{
     flex:1,
     },
@@ -43,6 +44,17 @@ const styles = StyleSheet.create({
       borderRadius: 50,
       // marginRight:5,
       // marginLeft:15
+      justifyContent: "space-between",
+      textAlign: 'center',
+      alignContent: 'space-between',
+      alignItems: 'center'
+    },
+    buttonHighlightesStyle: {
+      width: '50%',
+      marginTop: 12,
+      backgroundColor: "#EE5407",
+      padding: 15,
+      borderRadius: 50,
       justifyContent: "space-between",
       textAlign: 'center',
       alignContent: 'space-between',

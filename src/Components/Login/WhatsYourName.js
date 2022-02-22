@@ -85,7 +85,7 @@ export default function WhatsYourName(props) {
         setCurrentLatitude(currentLatitude);
 
 
-         
+
       },
       (error) => {
         setLocationStatus(error.message);
@@ -131,9 +131,9 @@ export default function WhatsYourName(props) {
   };
 
   function _handleonclick() {
-   var res= getCurrentCity(currentLatitude, currentLongitude).then((data)=>{
-        console.log(data);
-       
+    var res = getCurrentCity(currentLatitude, currentLongitude).then((data) => {
+      console.log(data);
+
 
     });
     console.log(res);
@@ -141,9 +141,12 @@ export default function WhatsYourName(props) {
 
   };
   function SignUpReq() {
-    
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+
     if (FName == '' || LName == '' || email == '') {
       alert('Please Mention the details.')
+    } else if (reg.test(email.trim()) === false) {
+      alert("Please Enter valid Email..");
     } else {
 
       var body = {
@@ -199,16 +202,16 @@ export default function WhatsYourName(props) {
     }
   }
 
-  const getCurrentCity=async (lat, long) =>{
+  const getCurrentCity = async (lat, long) => {
     console.log(lat, long);
-   return await axios.get(
+    return await axios.get(
       // 'https://apis.mapmyindia.com/advancedmaps/v1/db7d087ab67a71109cbc057e694a8319/rev_geocode?' +
       // 'lat=' + '37.785834' +
       // '&lng=' + '-122.406417'
       'https://apis.mapmyindia.com/advancedmaps/v1/db7d087ab67a71109cbc057e694a8319/rev_geocode?lat=18.9820995&lng=73.0996627'
-      )
+    )
       .then(function (response) {
-        console.log('response : ' +JSON.stringify( response));
+        console.log('response : ' + JSON.stringify(response));
         // if (response.responseCode = '200') {
         //   setCity(response.data.results[0].city);
         // } else {
@@ -232,23 +235,20 @@ export default function WhatsYourName(props) {
       </View>
 
       <View style={styles.inputView}>
-        {/* <Text style={{ fontSize:25 ,marginTop:6 ,color:'#000000'}}>+91</Text> */}
         <TextInput
           style={styles.inputText}
-          // placeholder="xxxxxxxxxx" 
           placeholderTextColor="#003f5c"
           borderColor='#000000'
           returnKeyLabel='Done'
           returnKeyType='done'
           maxLength={10}
-          placeholder='First name'
+          placeholder='First name*'
           onChangeText={text => setFName(text)} />
 
 
       </View>
 
       <View style={styles.inputView}>
-        {/* <Text style={{ fontSize:25 ,marginTop:6 ,color:'#000000'}}>+91</Text> */}
         <TextInput
           style={styles.inputText}
           // placeholder="xxxxxxxxxx" 
@@ -257,7 +257,7 @@ export default function WhatsYourName(props) {
           returnKeyLabel='Done'
           returnKeyType='done'
           maxLength={10}
-          placeholder='Last name'
+          placeholder='Last name*'
           onChangeText={text => setLName(text)} />
 
 
@@ -273,7 +273,7 @@ export default function WhatsYourName(props) {
           returnKeyLabel='Done'
           returnKeyType='done'
           maxLength={50}
-          placeholder='Email'
+          placeholder='Email*'
           keyboardType='email-address'
           enablesReturnKeyAutomatically='false'
           onChangeText={text => setemail(text)} />
@@ -282,7 +282,7 @@ export default function WhatsYourName(props) {
       </View>
       {/* <Text style={styles.smallHeader}>By processing ,I approve to the Terms &#38; conditions</Text> */}
       <TouchableOpacity style={styles.bottomView} onPress={() =>
-    _handleonclick()
+        _handleonclick()
       }>
         <Text style={styles.loginText}>SUBMIT</Text>
       </TouchableOpacity>

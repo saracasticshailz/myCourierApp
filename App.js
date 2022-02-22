@@ -51,7 +51,7 @@ constructor(props){
         <Stack.Navigator initialRouteName='LoginScreen'>
           <Stack.Screen name='LoginScreen' component={LoginScreen} options={{title:'Login'}}></Stack.Screen>
           <Stack.Screen name='OTP' component={OTP} options={{title:'OTP'}}></Stack.Screen>
-          <Stack.Screen name='Dashboard' component={Dashboard} options={{title:'Dashboard'}}></Stack.Screen>
+          <Stack.Screen name='Dashboard' component={Dashboard} options={{title:'Deliver Now'}}></Stack.Screen>
           <Stack.Screen name='SetPassword' component={SetPassword} options={{title:'Set Password'}}></Stack.Screen>
           <Stack.Screen name='ViewMap' component={ViewMap} options={{title:'View Map'}}></Stack.Screen>
           <Stack.Screen name='TellUsAboutYourself' component={TellUsAboutYourself} options={{title:'Tell Us About Yourself'}}></Stack.Screen>
