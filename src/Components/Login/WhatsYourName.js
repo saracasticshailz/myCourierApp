@@ -8,30 +8,25 @@ import axios from 'axios';
 import { _storeData } from '../../utils/storage';
 import Constant from '../../utils/Constant';
 import { PermissionsAndroid } from 'react-native';
-
+import Mapmyindia from 'mapmyindia-restapi-react-native-beta';
 
 
 
 export default function WhatsYourName(props) {
+  console.log("WhatsYourName: "+JSON.stringify( props));
   const [FName, setFName] = useState();
   const [LName, setLName] = useState();
   const [email, setemail] = useState();
-  const [city, setCity] = useState('chandigarh');
+  const [city, setCity] = useState(props.route.params.city);
+  const [mobNo, setmobNo] = useState(props.route.params.mobNo);
+  const [lat,setLat]=useState(props.route.params.lat);
+  const [long,setLong]=useState(props.route.params.long);
+  const [formattedAddress,setformattedAddress]=useState();
+  const [eLoc,SetEloc]=useState();
 
-  const [
-    currentLongitude,
-    setCurrentLongitude
-  ] = useState('...');
-  const [
-    currentLatitude,
-    setCurrentLatitude
-  ] = useState('...');
-  const [
-    locationStatus,
-    setLocationStatus
-  ] = useState('');
+   useEffect(() => {
+    getCurrentCity(lat,long);
 
-  // useEffect(() => {
   //   const requestLocationPermission = async () => {
   //     if (Platform.OS === 'ios') {
   //       getOneTimeLocation();
@@ -61,7 +56,7 @@ export default function WhatsYourName(props) {
   //   return () => {
   //     Geolocation.clearWatch(watchID);
   //   };
-  // }, []);
+   }, []);
 
   // const getOneTimeLocation = () => {
   //   setLocationStatus('Getting Location ...');
@@ -131,16 +126,18 @@ export default function WhatsYourName(props) {
   // };
 
   function _handleonclick() {
-    var res = getCurrentCity(currentLatitude, currentLongitude).then((data) => {
-      console.log(data);
+    // const res = getCurrentCity(lat, long).then((data) => {
+    //   console.log('getCurrentCity data: '+data);
+    // });
+    // console.log('getCurrentCity res: '+JSON.stringify(res));
 
 
-    });
-    console.log(res);
     SignUpReq();
 
   };
   function SignUpReq() {
+
+
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 
     if (FName == '' || LName == '' || email == '') {
@@ -152,12 +149,12 @@ export default function WhatsYourName(props) {
       var body = {
         "firstname": FName,
         "lastname": LName,
-        "mobilenumber": "7666688829",
+        "mobilenumber": mobNo,
         "email": email,
         "password": "121212",
         "fcmtoken": "xysnsas",
-        "lat": currentLatitude,
-        "long": currentLongitude,
+        "lat": lat,
+        "long": long,
         "city": city,
         "country": "India",
         "Device_lang": "EN",
@@ -172,13 +169,31 @@ export default function WhatsYourName(props) {
         , {
           'Content-Type': 'application/json',
           //   'Accept': 'application/json',
-
         })
         .then(function (response) {
           console.log('res : ' + JSON.stringify(response));
           if (response.status === 200) {
-            props.navigation.navigate('Dashboard', {});
+
+
+            _storeData(Constant.FNAME,FName);
+            _storeData(Constant.LNAME,LName);
+            _storeData(Constant.EMAIL,email);
+            _storeData(Constant.CITY,city);
+            _storeData(Constant.MOBNO,mobNo);
             _storeData(Constant.isLogin, true);
+            _storeData(Constant.lat,lat);
+            _storeData(Constant.longitude,long);
+            _storeData(Constant.fromAdd,formattedAddress);  
+            _storeData(Constant.toELOC,eLoc);
+
+            props.navigation.navigate('Dashboard', {
+              formattedAddress:formattedAddress,
+              flag:'pre',
+              preEloc:eLoc
+            });
+           
+            
+  
 
           }
           else {
@@ -201,22 +216,52 @@ export default function WhatsYourName(props) {
         });
     }
   }
+  function getCurrentAddWithEloc(placeName) {
+    console.log(placeName);
+     Mapmyindia.atlas_geocode({address: placeName}, response => {
+      console.log( "getCurrentAdd : "+JSON.stringify( response));
+
+
+      const longitude = response.copResults.longitude;
+      const latitude = response.copResults.latitude;
+      const eLoc = response.copResults.eLoc;
+      SetEloc(eLoc);
+      setLat(latitude);
+      setLong(longitude);
+
+      Toast.show(
+        `Longitude :${longitude} Latitude :${latitude} Eloc :${eLoc}`,
+        Toast.LONG,
+      );
+      // this.setState({
+      //   label: response.copResults.formattedAddress,
+      // });
+    });
+  }
 
   const getCurrentCity = async (lat, long) => {
     console.log(lat, long);
-    return await axios.get(
-      // 'https://apis.mapmyindia.com/advancedmaps/v1/db7d087ab67a71109cbc057e694a8319/rev_geocode?' +
-      // 'lat=' + '37.785834' +
-      // '&lng=' + '-122.406417'
-      'https://apis.mapmyindia.com/advancedmaps/v1/db7d087ab67a71109cbc057e694a8319/rev_geocode?lat=18.9820995&lng=73.0996627'
+   const value =await axios.get(
+      'https://apis.mapmyindia.com/advancedmaps/v1/db7d087ab67a71109cbc057e694a8319/rev_geocode?'+
+      'lat='+'18.982054'+
+      '&lng='+'73.0995554'
     )
       .then(function (response) {
         console.log('response : ' + JSON.stringify(response));
         // if (response.responseCode = '200') {
-        //   setCity(response.data.results[0].city);
+          let mycity=response.data.results[0].city
+console.log(mycity);
+           setCity(mycity);
+           setformattedAddress(response.data.results[0].formatted_address);
+           console.log('formattedAddress : '+formattedAddress)
+           
+         //  SetEloc()
         // } else {
         //   alert('error')
         // }
+        getCurrentAddWithEloc(formattedAddress);
+        // value=JSON.stringify(response);
+        // return value;
 
 
       })
@@ -226,6 +271,7 @@ export default function WhatsYourName(props) {
         console.log(error);
 
       });
+      return value;
   }
   return (
     <View style={styles.mainView}>

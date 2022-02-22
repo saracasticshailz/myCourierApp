@@ -211,6 +211,13 @@ export default function Dashboard(props) {
         settoAdd(selectedAdd);
         settoEloc(from_eloc);
       }
+      if(props.route.params.flag == 'pre'){
+        let pre_eloc=props.route.params.preEloc
+        let selectedAdd=props.route.params.formattedAddress
+        setFromAdd(selectedAdd);
+        setfromEloc(pre_eloc);
+
+      }
 
       if(toAdd){
         _getDistanceViaeLoc(fromAdd,toAdd);

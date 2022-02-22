@@ -21,6 +21,8 @@ export default function OTP(props) {
   const [city, Setcity] = useState(props.route.params.city);
   const [token, setMytoken] = useState('');
   const [loading, isLoading] = useState(false);
+  const [lat,setLat]=useState(props.route.params.lat);
+  const [long,setLong]=useState(props.route.params.long);
 
   // _retrieveData = async () => {
   //   try {
@@ -67,7 +69,9 @@ export default function OTP(props) {
 
           props.navigation.navigate('WhatsYourName', {
             city: city,
-            mobNo: mobNo
+            mobNo: mobNo,
+            lat:lat,
+            long:long
           });
         } else {
           console.log('error', response);

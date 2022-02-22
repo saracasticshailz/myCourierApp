@@ -7,8 +7,12 @@ export default {
     isLogin:false,
     lat:'lat',
     longitude:'long',
-
-
+    FNAME:'FNAME',
+    LNAME:'LNAME',
+    EMAIL:'EMAIL',
+    CITY:'CITY',
+    MOBNO:'MOBNO',
+  
     token:'token',
    
     COLOR: {

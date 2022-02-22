@@ -38,29 +38,6 @@ class AddressSelection extends Component {
   }
 
   geoCodeApi(placeName) {
-    // Mapmyindia.atlas_geocode({address: placeName}, response => {
-    //   const longitude = response.copResults.longitude;
-    //   const latitude = response.copResults.latitude;
-    //   const eLoc = response.copResults.eLoc;
-    //   this.setState({
-    //     // lat: parseFloat(latitude),
-    //     // lng: parseFloat(longitude),
-    //     // lat: '18.978050',
-    //     // lng: '73.106087',
-    //     eLoc:eLoc
-    //   });
-    //   console.log(response);
-
-    //   Toast.show(
-    //     `Longitude :${longitude} Latitude :${latitude} Eloc :${eLoc}`,
-    //     Toast.LONG,
-    //   );
-    //   this.setState({
-    //     label: response.copResults.formattedAddress,
-    //   });
-    // });
-
-    // ===========================
     MapmyIndiaGL.RestApi.geocode({address:placeName})
     .then(response => {
     const data = JSON.parse(response);

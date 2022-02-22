@@ -29,6 +29,7 @@ export default function LoginScreen (props) {
     const [otpToken,setOtpToken]=useState();
     const [loading,isLoading]=useState(false);
     const [toggleCheckBox, setToggleCheckBox] = useState(false)
+
     const [
       currentLongitude,
       setCurrentLongitude
@@ -41,6 +42,8 @@ export default function LoginScreen (props) {
       locationStatus,
       setLocationStatus
     ] = useState('');
+
+    const [address,setAddress]=useState('');
 
    
     // _storeData = async () => {
@@ -64,8 +67,10 @@ export default function LoginScreen (props) {
             isLoading(true);
    
             axios.post('https://stgapi.opoli.in/user/login', 
-            {'mobilenumber':mobNo},{'Content-type': 'Application/json',
-            Accept: 'Application/json',})
+            {'mobilenumber':mobNo},
+            {'Content-type': 'Application/json',
+            Accept: 'Application/json',
+          })
               .then(function(response) { 
                 isLoading(false);   
               console.log(response);
@@ -84,7 +89,9 @@ export default function LoginScreen (props) {
         
               props.navigation.navigate('OTP',{
                // city:city,  
-                mobNo:mobNo
+                mobNo:mobNo,
+                lat:currentLatitude,
+                long:currentLongitude
               });
               }else{
                 console.log('error',response);
@@ -148,6 +155,7 @@ export default function LoginScreen (props) {
     Mapmyindia.rev_geocode({lat: latitude, lng: longitude}, response => {
       console.log("revGeoCodeApi response"+JSON.stringify( response));
       Toast.show(response.results[0].formatted_address, Toast.SHORT);
+      setAddress(response.results[0].formatted_address);
      
     });
   }
