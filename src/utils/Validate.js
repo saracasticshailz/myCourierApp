@@ -29,3 +29,24 @@ export function validateCoordinates(longitude,latitude) {
   );
   return false;
 }
+function  getFormattedDuration(duration) {
+  let min = parseInt((duration % 3600) / 60);
+  let hours = parseInt((duration % 86400) / 3600);
+  let days = parseInt(duration / 86400);
+  if (days > 0) {
+    return (
+      days +
+      ' ' +
+      (days > 1 ? 'Days' : 'Day') +
+      ' ' +
+      hours +
+      ' ' +
+      'hr' +
+      (min > 0 ? ' ' + min + ' ' + 'min.' : '')
+    );
+  } else {
+    return hours > 0
+      ? hours + ' ' + 'hr' + (min > 0 ? ' ' + min + ' ' + 'min' : '')
+      : min + ' ' + 'min.';
+  }
+}

@@ -21,9 +21,6 @@ import Mapmyindia from 'mapmyindia-restapi-react-native-beta';
 
 
 export default function LoginScreen (props) {
-
-    console.log(props)
-   const [city,setCity]=useState('');
     const [mobNo,setMobNo]=useState();
    // const {token,setTokentoContext}=useContext(UserDetailsContext);
     const [otpToken,setOtpToken]=useState();
@@ -42,8 +39,6 @@ export default function LoginScreen (props) {
       locationStatus,
       setLocationStatus
     ] = useState('');
-
-    const [address,setAddress]=useState('');
 
    
     // _storeData = async () => {
@@ -77,7 +72,6 @@ export default function LoginScreen (props) {
               if(response.status === 200){
                 
               //  const LOGIN_TOKEN=response.data.token;
-              console.log("200"+ response.status.token);
              //setTokentoContext(response.data.token);
              //var token=response.data.token;
              setOtpToken(response.data.token);
@@ -88,7 +82,6 @@ export default function LoginScreen (props) {
             //  var token=AsyncStorage.getItem('token');
         
               props.navigation.navigate('OTP',{
-               // city:city,  
                 mobNo:mobNo,
                 lat:currentLatitude,
                 long:currentLongitude
@@ -151,14 +144,22 @@ export default function LoginScreen (props) {
     };
   }, []);
 
- const revGeoCodeApi = (latitude, longitude) =>{
-    Mapmyindia.rev_geocode({lat: latitude, lng: longitude}, response => {
-      console.log("revGeoCodeApi response"+JSON.stringify( response));
-      Toast.show(response.results[0].formatted_address, Toast.SHORT);
-      setAddress(response.results[0].formatted_address);
+//  const revGeoCodeApi = (latitude, longitude) =>{
+//    console.log("revGeoCodeApi : "+latitude);
+//     Mapmyindia.rev_geocode({lat: latitude, lng: longitude}, response => {
+//       if(response===null){
+//         alert('add not found');
+//       }else{
+//       console.log("revGeoCodeApi response"+JSON.stringify( response));
+//     //  Toast.show(response.results[0].formatted_address, Toast.SHORT);
+//       let add=response.results[0].formatted_address;
+//       if(add){
+//         setAddress(response.results[0].formatted_address);
+// }
+//       }
      
-    });
-  }
+//     });
+//   }
 
   const getOneTimeLocation = () => {
     setLocationStatus('Getting Location ...');
@@ -170,7 +171,6 @@ export default function LoginScreen (props) {
         //getting the Longitude from the location json
         const currentLongitude =
           JSON.stringify(position.coords.longitude);
-
         //getting the Latitude from the location json
         const currentLatitude =
           JSON.stringify(position.coords.latitude);
@@ -183,7 +183,6 @@ export default function LoginScreen (props) {
 
         //Setting Longitude state
         setCurrentLatitude(currentLatitude);
-        revGeoCodeApi(currentLatitude,currentLongitude);
 
          
       },
@@ -231,13 +230,13 @@ export default function LoginScreen (props) {
   };
 
   _onPhoneNumberPressed = async () => {
-    try {
-      const phoneNumber = await SmsRetriever.requestPhoneNumber();
-      console.log(phoneNumber);
-      setMobNo(phoneNumber);
-    } catch (error) {
-      console.log(JSON.stringify(error));
-    }
+    // try {
+    //   const phoneNumber = await SmsRetriever.requestPhoneNumber();
+    //   console.log(phoneNumber);
+    //   setMobNo(phoneNumber);
+    // } catch (error) {
+    //   console.log(JSON.stringify(error));
+    // }
    };
     return (
 <View style={styles.mainView}>

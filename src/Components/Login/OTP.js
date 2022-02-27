@@ -18,7 +18,6 @@ export default function OTP(props) {
   const [mobNo, setMobNo] = useState(props.route.params.mobNo);
   const [otp, setotp] = useState('');
   const [isEntered, setisEntered] = useState(false);
-  const [city, Setcity] = useState(props.route.params.city);
   const [token, setMytoken] = useState('');
   const [loading, isLoading] = useState(false);
   const [lat,setLat]=useState(props.route.params.lat);
@@ -68,7 +67,6 @@ export default function OTP(props) {
          
 
           props.navigation.navigate('WhatsYourName', {
-            city: city,
             mobNo: mobNo,
             lat:lat,
             long:long
@@ -76,7 +74,7 @@ export default function OTP(props) {
         } else {
           console.log('error', response);
           isLoading(false);
-         // alert('Invalid OTP');
+          alert('Invalid OTP');
         }
 
       })

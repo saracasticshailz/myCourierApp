@@ -18,7 +18,7 @@ export const _storeData = async (key,value) => {
      
       if (value !== null) {
         // We have data!!
-        console.log("value : "+value);
+  //      console.log("value : "+value);
         return value;
       }
     } catch (error) {

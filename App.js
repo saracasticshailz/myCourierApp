@@ -36,6 +36,8 @@ import Constant from './src/utils/Constant';
 import { _retrieveData } from './src/utils/storage';
 import AutoSuggestActivity from './src/Components/Map/AutoSuggestActivity';
 import CurrentLocationActivity from './src/Components/Map/CurrentLocationActivity';
+import { Provider } from 'react-redux';
+import store from './src/stateManagement/store/store';
 const Stack= createNativeStackNavigator();
 
 class AppContainer extends React.Component {
@@ -74,9 +76,9 @@ constructor(props){
 const App=()=>
 {
   return(
-    <UserDetailsProvider>
+    <Provider store={store}>
       <AppContainer/>
-    </UserDetailsProvider>
+      </Provider>
   );
 }
 

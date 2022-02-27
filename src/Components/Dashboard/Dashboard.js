@@ -37,6 +37,8 @@ export default function Dashboard(props) {
     imageuri: require('../../assets/interval.png')
   }];
 
+  const diamensionsArray=[1,2,3,4,5,6,7,8,9,10,11,12];
+
   const [myArray, setdataArray] = React.useState(dataArray);
   const [fromAdd,setFromAdd]=React.useState();
   const [toAdd,settoAdd]=React.useState();
@@ -64,6 +66,56 @@ export default function Dashboard(props) {
   //     setFromAdd(_retrieveData(Constant.fromAdd));
   //   }
   // },[fromAdd]);
+
+  function validateWeight(param){
+if(param!=null && param>500)
+{
+  alert('Weight should be less than 500 gms.');
+  setWeight(500);
+}else{
+  setWeight(param);
+}
+  };
+
+  function validateLength(param){
+if(param != null && param>12){
+alert('Length should be lesser than 12 cms.');
+setLength(12);
+}else{
+  setLength(param);
+}
+  }
+
+  function validateBreadth(param){
+    if(param != null && param>12){
+    alert('Breadth should be lesser than 12 cms.');
+    setBreadth(12);
+    }else{
+      setBreadth(param);
+    }
+      }
+
+      function validateHeight(param){
+        if(param != null && param>12){
+        alert('Height should be lesser than 12 cms.');
+        setHeight(12);
+        }else{
+          setHeight(param);
+        }
+          };
+
+      function validateQty(param){
+        if(param == null){
+          alert('Quantity should be atleast 1 Unit.');
+        
+          }else
+           if(param>3){
+            alert('Sorry..We support maximum 2 units.')
+          }
+          else{
+            setHeight(param);
+          }
+      }
 
   function _calculatePricing(){
 
@@ -125,7 +177,6 @@ export default function Dashboard(props) {
   function _handleToMapClick(){
    // if(dataArray){
      props. navigation.navigate('AutoSuggestActivity',{
-       myData:'myadata',
        flag:'to'
       // changeFromAddress:this.changeFromAddress.bind(this)
       });
@@ -165,27 +216,7 @@ export default function Dashboard(props) {
       return dis + 'Km.';
     };
   
-  function  getFormattedDuration(duration) {
-      let min = parseInt((duration % 3600) / 60);
-      let hours = parseInt((duration % 86400) / 3600);
-      let days = parseInt(duration / 86400);
-      if (days > 0) {
-        return (
-          days +
-          ' ' +
-          (days > 1 ? 'Days' : 'Day') +
-          ' ' +
-          hours +
-          ' ' +
-          'hr' +
-          (min > 0 ? ' ' + min + ' ' + 'min.' : '')
-        );
-      } else {
-        return hours > 0
-          ? hours + ' ' + 'hr' + (min > 0 ? ' ' + min + ' ' + 'min' : '')
-          : min + ' ' + 'min.';
-      }
-    }
+
 
     
   useEffect(() => {
@@ -339,8 +370,8 @@ export default function Dashboard(props) {
                   style={styles.inputText}           
                   enablesReturnKeyAutomatically='false'
                   
-                  onChangeText={text =>setWeight(text)}/>
-      
+                  onChangeText={text =>validateWeight(text)}/>
+
                   <Text style={styles.smallHeader}>gms</Text>
           </View>
          
@@ -365,7 +396,7 @@ export default function Dashboard(props) {
                   placeholder='i.e 10.8'
                   keyboardType='decimal-pad'
                   enablesReturnKeyAutomatically='false'
-                  onChangeText={text =>setLength(text)}/>
+                  onChangeText={text =>validateLength(text)}/>
       
                   <Text style={styles.smallHeader}>cms</Text>
           </View>
@@ -391,7 +422,7 @@ export default function Dashboard(props) {
                   placeholder='i.e 10.8'
                   keyboardType='decimal-pad'
                   enablesReturnKeyAutomatically='false'
-                  onChangeText={text =>setBreadth(text)}/>
+                  onChangeText={text =>validateBreadth(text)}/>
       
                   <Text style={styles.smallHeader}>cms</Text>
           </View>
@@ -413,7 +444,7 @@ export default function Dashboard(props) {
                   placeholder='i.e 10.8'
                   keyboardType='decimal-pad'
                   enablesReturnKeyAutomatically='false'
-                  onChangeText={text =>setquantity(text)}
+                  onChangeText={text =>validateQty(text)}
                   style={styles.inputText}           
                   />
       
@@ -439,7 +470,7 @@ export default function Dashboard(props) {
                   placeholder='i.e 10.8'
                   keyboardType='decimal-pad'
                   enablesReturnKeyAutomatically='false'
-                  onChangeText={text =>setHeight(text)}
+                  onChangeText={text =>validateHeight(text)}
                   style={styles.inputText}           
                   />
       
