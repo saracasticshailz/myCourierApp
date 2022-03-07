@@ -11,9 +11,7 @@ import { PermissionsAndroid } from 'react-native';
 import Mapmyindia from 'mapmyindia-restapi-react-native-beta';
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { actionCreators } from '../../stateManagement/store/index'
-
-
+import { actionCreators } from '../../stateManagement/store/index';
 
 export default function WhatsYourName(props) {
   console.log("WhatsYourName: " + JSON.stringify(props));
@@ -32,13 +30,12 @@ export default function WhatsYourName(props) {
 
   const { insertData } = bindActionCreators(actionCreators, dispatch);
 
-
   useEffect(() => {
-    if(lat){
+    if (lat) {
       getCurrentCity(lat, long);
     }
-   
- }, []);
+
+  }, []);
 
   function _handleonclick() {
     // const res = getCurrentCity(lat, long).then((data) => {
@@ -75,8 +72,8 @@ export default function WhatsYourName(props) {
       console.log('body : ' + JSON.stringify(body));
       axios.post('https://stgapi.opoli.in/user/register',
         body, {
-          'Content-Type': 'application/json',
-        })
+        'Content-Type': 'application/json',
+      })
         .then(function (response) {
           console.log('res : ' + JSON.stringify(response));
           if (response.status === 200) {
@@ -100,7 +97,7 @@ export default function WhatsYourName(props) {
             });
           }
           else {
-            alert('something error');
+            alert('something error in status code');
             console.log('Whats your name : Error');
           }
         }).catch(function (error) {
@@ -144,31 +141,31 @@ export default function WhatsYourName(props) {
     console.log(lat, long);
     const value = await axios.get(
       'https://apis.mapmyindia.com/advancedmaps/v1/db7d087ab67a71109cbc057e694a8319/rev_geocode?' +
-      'lat=' + lat +
-      '&lng=' + long
+      'lat=' + '19.048840' +
+      '&lng=' + '73.014060'
     )
       .then(function (response) {
         console.log('getCurrentCity with latlong response : ' + JSON.stringify(response));
         // if (response.responseCode = '200') {
         let mycity = response.data.results[0].city
-        let formadd=response.data.results[0].formatted_address;
+        let formadd = response.data.results[0].formatted_address;
 
         console.log(mycity);
         console.log(formadd);
         setCity(mycity);
         setformattedAddress(formadd);
-        
+
         console.log('state formattedAddress : ' + formattedAddress);
-        console.log('state city : '+city);
+        console.log('state city : ' + city);
 
         //  SetEloc()
         // } else {
         //   alert('error')
         // }
-      //  if(formattedAddress){
-          getCurrentEloc(response.data.results[0].formatted_address);
-     //   }
-      
+        //  if(formattedAddress){
+        getCurrentEloc(response.data.results[0].formatted_address);
+        //   }
+
         // value=JSON.stringify(response);
         // return value;
       })

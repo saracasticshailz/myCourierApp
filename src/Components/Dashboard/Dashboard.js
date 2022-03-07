@@ -113,7 +113,7 @@ setLength(12);
             alert('Sorry..We support maximum 2 units.')
           }
           else{
-            setHeight(param);
+            setquantity(param);
           }
       }
 
@@ -121,10 +121,20 @@ setLength(12);
 
     if(totalDistanceKM == ''){
       alert('Please select location');
-    } else if(length == '' || breadth =='' || weight=='' || height ==  '' || quantity ==  ''){
-      alert('Please mention diamensions');
+    } 
+    else if(length == '' ){
+      alert('Please mention length!');
 
-    }else {
+    }else if(breadth ==''){
+      alert('Please mention breadth');
+    }else if(weight==''){
+alert('Please mention weight!');
+    }else if(height == ''){
+alert('Please mention height!')
+    }else if(quantity == ''){
+alert('Please mention Quantity!')
+    }
+    else {
     let config = {
       headers: {
         'Authorization':token,
@@ -134,11 +144,11 @@ setLength(12);
       "distance":'120',
     "cateogryType":"electric",
     "value":"5000",
-    "weight":"0.1",
-    "length":"12",
-    "breadth":"12",
-    "height":"12",
-    "quantity":"21",
+    "weight":weight,
+    "length":length,
+    "breadth":breadth,
+    "height":height,
+    "quantity":quantity,
     "isPeaktime":true}
     axios.post('https://stgapi.opoli.in/pricing/calculate', 
     body,config)
@@ -496,37 +506,3 @@ setLength(12);
   
   );
 }
-
-// const Styles = StyleSheet.create({
-//   buttonStyle: {
-//     width: '50%',
-//     marginTop: 12,
-//     backgroundColor: "#d3d3d3",
-//     padding: 15,
-//     borderRadius: 50,
-//     // marginRight:5,
-//     // marginLeft:15
-//     justifyContent: "space-between",
-//     textAlign: 'center',
-//     alignContent: 'space-between',
-//     alignItems: 'center'
-//   },
-//   btnText: {
-//     color: "#000000",
-//     fontSize: 16,
-//     justifyContent: "space-between",
-//     textAlign: "center",
-//   },
-//   textStyle: {
-//     fontSize: 16
-//   },
-//   btn: {
-//     alignSelf: 'stretch',
-//     backgroundColor: '#01c853',
-//     padding: 10,
-//     margin: 10,
-//     marginLeft: 100,
-//     marginRight: 100,
-//     alignItems: 'center',
-//   }
-// });

@@ -25,7 +25,8 @@ export default function LoginScreen (props) {
    // const {token,setTokentoContext}=useContext(UserDetailsContext);
     const [otpToken,setOtpToken]=useState();
     const [loading,isLoading]=useState(false);
-    const [toggleCheckBox, setToggleCheckBox] = useState(false)
+    const [toggleCheckBox, setToggleCheckBox] = useState(false);
+    const [isLogin,setIsLogin]=useState('');
 
     const [
       currentLongitude,
@@ -80,12 +81,17 @@ export default function LoginScreen (props) {
               console.log('response.data.token : '+response.data.token);
             
             //  var token=AsyncStorage.getItem('token');
-        
+            if(response.data.token){
               props.navigation.navigate('OTP',{
                 mobNo:mobNo,
                 lat:currentLatitude,
                 long:currentLongitude
               });
+            }else{
+              alert('OTP not sent!')
+            }
+        
+             
               }else{
                 console.log('error',response);
                 isLoading(false);
@@ -112,6 +118,9 @@ export default function LoginScreen (props) {
   }
 
   useEffect(() => {
+//    _retrieveData(Constant.isLogin).then((data)=>{
+// console.log(data);
+//     })
     const requestLocationPermission = async () => {
       if (Platform.OS === 'ios') {
         getOneTimeLocation();
@@ -142,6 +151,8 @@ export default function LoginScreen (props) {
     return () => {
       Geolocation.clearWatch(watchID);
     };
+
+    
   }, []);
 
 //  const revGeoCodeApi = (latitude, longitude) =>{

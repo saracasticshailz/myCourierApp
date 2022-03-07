@@ -110,7 +110,6 @@ _getDistanceViaeLoc(){
     this.props.navigation.navigate('Dashboard',{
       formattedAddress:this.state.formattedAddress,
       flag:'to'
-
     });
    }
 
